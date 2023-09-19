@@ -4,6 +4,7 @@ const ApiFeature = require("../utils/feature");
 //create Product - Only Admin has access to create the product
 
 exports.createProduct = async (req, res, next) => {
+// req.body.user = req.user.id
   const product = await Product.create(req.body);
 
   res.status(201).json({
@@ -15,7 +16,9 @@ exports.createProduct = async (req, res, next) => {
 //GET PRODUCT DETAILS
 
 exports.getProductDetails = async (req, res, next) => {
+
   try {
+
     let product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({
@@ -30,7 +33,7 @@ exports.getProductDetails = async (req, res, next) => {
     console.log(e);
     return res.status(500).send(e);
   }
-};
+};  
 
 //GET ALL PRODUCTS
 exports.getAllProducts = async (req, res) => {
@@ -41,6 +44,7 @@ exports.getAllProducts = async (req, res) => {
     .pagination(resultPerPage);
 
     const productCount = await Product.countDocuments()
+    // console.log(productCount)
   // const products = await Product.find();
   const products = await apiFeature.query;
   return res

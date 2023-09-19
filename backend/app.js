@@ -6,12 +6,10 @@ const cookieParser = require('cookie-parser')
 
 
 app.use(express.json())
-app.use(cookieParser)
+app.use(cookieParser())
 
 
 //Routes
-
-
 const userRoutes = require('./routes/userRoutes');
 const product = require('./routes/productRoute');
 app.use('/api/v1' , product)
@@ -19,6 +17,6 @@ app.use('/api/v1' , product)
 app.use('/api/v1' , userRoutes);
 
 //middleware for error
-app.use(errorMiddleware)
+// app.use(errorMiddleware)
 
 module.exports = app

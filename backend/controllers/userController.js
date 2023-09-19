@@ -1,6 +1,8 @@
 const eroor = require("../middlewares/eroor");
 const User = require("../models/userModel");
 const sendToken = require("../utils/sendToken");
+const sendEmail = require('../utils/sendEmail')
+
 //REGISTER A USER
 
 exports.registerUser = async (req, res, next) => {
@@ -22,30 +24,7 @@ exports.registerUser = async (req, res, next) => {
         message: "Please provide the required information",
       });
     }
-  //  return sendToken(user, 201, res);
-
-    const token = user.getJWTToken();
-
-    // options for cookie
-    const options = {
-      expires: new Date(
-        Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-      ),
-      httpOnly: true,
-    };
-  
-    return res.status(201).cookie("token", token, options).json({
-      success: true,
-      user,
-      token,
-    });
-
-
-    // return res.status(200).json({
-    //     message: true,
-    //     user
-    //   })
-
+    return sendToken(user, 201, res);
   } catch (e) {
     console.log(e);
     return res.status(500).send(e);
@@ -73,9 +52,82 @@ exports.loginUser = async (req, res, next) => {
     }
 
     const isPasswordMatched = await user.comparePassword(password);
-   return sendToken(user, 200, res);
+    return sendToken(user, 200, res);
   } catch (e) {
     console.log(e);
     return res.status(500).send(e);
   }
 };
+
+
+
+//LOGOUT USER
+
+exports.logOut = async (req,res, next)=>{
+  try{
+
+res.cookie('token', null, {
+  expires: new Date(Date.now()),
+  httpOnly: true,
+})
+    res.status(200).json({
+      success: true,
+      message: 'Logged Out'
+    })
+  }catch(e){
+    console.log(e)
+    return res.status(500).send(e)
+  }
+}
+
+
+//forget password
+
+exports.forgetPassword = async (req,res,next)=>{
+  try{
+const user = await User.findOne({email : req.body.email });
+if(!user){
+  return res.status(404).json({
+    message: 'User not found'
+  })
+}
+
+//get resetpassword token 
+const resetToken = await user.getResetPasswordToken();
+  
+
+await user.save({validateBeforeSave: false});
+
+const resetPasswordLink = `${req.protocol}:/${req.get('host')}/api/v1/password/reset/${resetToken}`;
+
+const message = `Your password reset token is :- \n ${resetPasswordLink} \nIf you have not requested this email then please ignore it  `;
+
+try{
+await sendEmail({
+email : user.email,
+subject: `Ecommerce Password Recovery`,
+message,
+
+})
+
+res.status(200).json({
+  success: true,
+  message:`Email sent to ${user.email} successfully.`
+})
+
+
+}catch(e){
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save({validateBeforeSave: false});
+  console.log(e)
+  return res.status(500).send(e)
+}
+
+
+}catch(e){
+    console.log(e)
+    return res.status(500).send(e)
+  }
+}
