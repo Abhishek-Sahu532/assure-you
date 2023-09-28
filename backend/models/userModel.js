@@ -43,8 +43,13 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
 
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
+  resetPasswordToken: {
+    type: String,
+    default: ''
+  },
+  resetPasswordExpire: {
+    type: Date
+  }
 });
 
 //function to store hashed password
@@ -63,20 +68,27 @@ userSchema.methods.getJWTToken = function () {
   });
 };
 
-
+//compare password
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password)
 }
 
-userSchema.methods.getResetPasswordToken = async () => {
+
+//RESET TOKEN
+userSchema.methods.getResetPasswordToken =  function (){
 
   //Token
   const resetToken = crypto.randomBytes(20).toString('hex');
 
   //Hashing Token & saving the value
-  this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest('hex')
+  // console.log('>>>1', this.resetPasswordToken)
+  this.resetPasswordToken = crypto
+  .createHash("sha256")
+  .update(resetToken)
+  .digest("hex");
 
-  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000 //min/sec/miliseconds
+this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;//min/sec/miliseconds
+  
   return resetToken
 }
 

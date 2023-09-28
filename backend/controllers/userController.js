@@ -1,7 +1,8 @@
 const eroor = require("../middlewares/eroor");
 const User = require("../models/userModel");
 const sendToken = require("../utils/sendToken");
-const sendEmail = require('../utils/sendEmail')
+const sendEmail = require("../utils/sendEmail");
+const crypto = require("crypto");
 
 //REGISTER A USER
 
@@ -59,75 +60,111 @@ exports.loginUser = async (req, res, next) => {
   }
 };
 
-
-
 //LOGOUT USER
 
-exports.logOut = async (req,res, next)=>{
-  try{
-
-res.cookie('token', null, {
-  expires: new Date(Date.now()),
-  httpOnly: true,
-})
+exports.logOut = async (req, res, next) => {
+  try {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
     res.status(200).json({
       success: true,
-      message: 'Logged Out'
-    })
-  }catch(e){
-    console.log(e)
-    return res.status(500).send(e)
+      message: "Logged Out",
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
   }
-}
-
+};
 
 //forget password
 
-exports.forgetPassword = async (req,res,next)=>{
-  try{
-const user = await User.findOne({email : req.body.email });
-if(!user){
-  return res.status(404).json({
-    message: 'User not found'
-  })
-}
+exports.forgetPassword = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    console.log("user", user);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
 
-//get resetpassword token 
-const resetToken = await user.getResetPasswordToken();
-  
+    //get resetpassword token
+    const resetToken = await user.getResetPasswordToken();
 
-await user.save({validateBeforeSave: false});
+    // console.log(resetToken)
+    await user.save({ validateBeforeSave: false });
 
-const resetPasswordLink = `${req.protocol}:/${req.get('host')}/api/v1/password/reset/${resetToken}`;
+    const resetPasswordLink = `${req.protocol}:/${req.get(
+      "host"
+    )}/api/v1/password/reset/${resetToken}`;
 
-const message = `Your password reset token is :- \n ${resetPasswordLink} \nIf you have not requested this email then please ignore it  `;
+    const message = `Your password reset token is :- \n ${resetPasswordLink} \nIf you have not requested this email then please ignore it  `;
 
-try{
-await sendEmail({
-email : user.email,
-subject: `Ecommerce Password Recovery`,
-message,
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: `Ecommerce Password Recovery`,
+        message,
+      });
 
-})
+      res.status(200).json({
+        success: true,
+        message: `Email sent to ${user.email} successfully.`,
+      });
+    } catch (e) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+      console.log(e);
+      return res.status(500).send(e);
+    }
 
-res.status(200).json({
-  success: true,
-  message:`Email sent to ${user.email} successfully.`
-})
-
-
-}catch(e){
-  user.resetPasswordToken = undefined;
-  user.resetPasswordExpire = undefined;
-
-  await user.save({validateBeforeSave: false});
-  console.log(e)
-  return res.status(500).send(e)
-}
-
-
-}catch(e){
-    console.log(e)
-    return res.status(500).send(e)
+    // await user.save();
+    console.log("controllerFrom", user.resetPasswordToken);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
   }
-}
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    //creating hashed token
+    const resetPasswordTokenByUser = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
+
+    // console.log(resetPasswordTokenByUser)
+    const user = await User.findOne({
+      resetPasswordToken: resetPasswordTokenByUser,
+      // resetPasswordExpire: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Token is expired",
+      });
+    }
+    //if password and repeat password not matched
+    if (req.body.password !== req.body.confirmPassword) {
+      return res.status(404).json({
+        message: "Password does not matched",
+      });
+    }
+
+    user.password = req.body.password;
+
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    //when everything goes right, user log in
+    await user.save();
+    sendToken(user, 200, res);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
