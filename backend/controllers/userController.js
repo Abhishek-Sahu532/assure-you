@@ -27,8 +27,13 @@ exports.registerUser = async (req, res, next) => {
     }
     return sendToken(user, 201, res);
   } catch (e) {
+    if (e.code === 11000) {
+      return res.status(400).json({
+        message: `Duplicate ${Object.keys(e.keyValue)} Entered`,
+      });
+    }
     console.log(e);
-    return res.status(500).send(e);
+    return res.status(400).send(e);
   }
 };
 
@@ -55,6 +60,12 @@ exports.loginUser = async (req, res, next) => {
     const isPasswordMatched = await user.comparePassword(password);
     return sendToken(user, 200, res);
   } catch (e) {
+    if (e.name === "jsonwebtokenerror") {
+      return res.status(400).json({
+        message: "Json web token in invalid, try again",
+      });
+    }
+
     console.log(e);
     return res.status(500).send(e);
   }
@@ -163,6 +174,156 @@ exports.resetPassword = async (req, res, next) => {
     //when everything goes right, user log in
     await user.save();
     sendToken(user, 200, res);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//GET USER DETAILS
+
+exports.getUserDetails = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return;
+    }
+    return res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//CHANGE PASSWORD
+
+exports.updatePassword = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).select("+password");
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    if (!isPasswordMatched) {
+      return res.status(400).json({
+        message: "Old password is incorrect",
+      });
+    }
+    if (req.body.newPassword !== req.body.confirmPassword) {
+      return res.status(400).json({
+        message: "Password does not matched",
+      });
+    }
+
+    user.password = req.body.newPassword;
+
+    await user.save();
+    sendToken(user, 200, res);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//UPDATE USER PROFILE
+
+exports.updateProfile = async (req, res, next) => {
+  try {
+    const newUserData = {
+      name: req.body.name,
+      email: req.body.email,
+    };
+
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//GET ALL USERS --ADMIN
+exports.getAllUser = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//GET USER DETAILS -- ADMIN
+
+exports.getSingleUserDetail = async (req, res, next) => {
+  try {
+    const user = await user.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User does not exist",
+      });
+    }
+
+    res.status.json({
+      success: true,
+      user,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//UPDATE ROLE -- ADMIN
+exports.updateUserRole = async (req, res, next) => {
+  try {
+    const newUserData = {
+      role: req.body.role,
+    };
+
+    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//DELETE ROLE -- ADMIN
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User does not exist",
+      });
+    }
+
+    await user.remove();
+    res.status(200).json({
+      success: true,
+      message: 'User successfully deleted'
+    });
   } catch (e) {
     console.log(e);
     return res.status(500).send(e);
