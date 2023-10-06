@@ -4,7 +4,7 @@ const ApiFeature = require("../utils/feature");
 //create Product - Only Admin has access to create the product
 
 exports.createProduct = async (req, res, next) => {
-// req.body.user = req.user.id
+  // req.body.user = req.user.id
   const product = await Product.create(req.body);
 
   res.status(201).json({
@@ -16,9 +16,7 @@ exports.createProduct = async (req, res, next) => {
 //GET PRODUCT DETAILS
 
 exports.getProductDetails = async (req, res, next) => {
-
   try {
-
     let product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({
@@ -33,7 +31,7 @@ exports.getProductDetails = async (req, res, next) => {
     console.log(e);
     return res.status(500).send(e);
   }
-};  
+};
 
 //GET ALL PRODUCTS
 exports.getAllProducts = async (req, res) => {
@@ -43,8 +41,8 @@ exports.getAllProducts = async (req, res) => {
     .filter()
     .pagination(resultPerPage);
 
-    const productCount = await Product.countDocuments()
-    // console.log(productCount)
+  const productCount = await Product.countDocuments();
+  // console.log(productCount)
   // const products = await Product.find();
   const products = await apiFeature.query;
   return res
@@ -52,7 +50,7 @@ exports.getAllProducts = async (req, res) => {
     .json({
       success: true,
       products,
-      productCount
+      productCount,
     })
     .send();
 };
@@ -95,6 +93,114 @@ exports.deleteProduct = async (req, res, next) => {
     await product.deleteOne({ _id: req.params.id });
     return res.status(200).json({
       message: "Product deleted",
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//create new review and update it
+
+exports.createProductReview = async (req, res, next) => {
+  try {
+    const { rating, comment, productId } = req.body;
+
+    const review = {
+      user: req.user.id,
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+    };
+
+    const product = await Product.findById(productId);
+    const isReceived = product.reviews.find(
+      (rev) => rev.user.toString() === req.user._id.toString()
+    ); //checking the previous reviews, if done or not
+
+    if (isReceived) {
+      product.reviews.forEach((rev) => {
+        if ((rev) => rev.user.toString() === req.user._id.toString()) {
+          (rev.rating = rating), (rev.comment = comment);
+        }
+      });
+    } else {
+      product.review.push(review);
+      product.numOfReviews = product.reviews.length;
+    }
+    // overall ratings
+    let avg = 0;
+    product.reviews.forEach((rev) => {
+      avg += rev.rating;
+    });
+
+    product.ratings = avg / product.reviews.length;
+
+    await product.save({ validateBeforeSave: false });
+    res.status(200).json({
+      success: true,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//GET ALL REVIEWS OF A PRODUCT
+
+exports.getProductRevviews = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.query.id);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      reviews: product.reviews,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e);
+  }
+};
+
+//DELETE REVIEWS
+exports.deleteReview = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.query.productId);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+    const reviews = product.reviews.filter(
+      (rev) => rev._id.toString() !== req.query.id.toString()
+    );
+
+    let avg = 0;
+
+   reviews.forEach((rev) => {
+      avg += rev.rating;
+    });
+
+   ratings = avg / reviews.length;
+
+   const numOfReviews = reviews.length;
+    await product.findByIdAndUpdate(req.query.productId, {
+      reviews, ratings, numOfReviews
+    },{
+      new: true,
+      runValidators: true,
+      useFindAndModify: false
+    })
+
+    res.status(200).json({
+      success: true,
     });
   } catch (e) {
     console.log(e);
