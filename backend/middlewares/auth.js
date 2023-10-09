@@ -22,7 +22,7 @@ exports.isAuthenticate = async (req, res, next) => {
 };
 
 
-//CHECKING THE ROLES OF USER
+//CHECKING THE ROLE OF USER
 
 exports.authorizeRoles = (...roles) => {
   try {
