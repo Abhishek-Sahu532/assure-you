@@ -5,7 +5,7 @@ const {
   updateProduct,
   deleteProduct,
   getProductDetails,
-  createProductReview,getProductRevviews, deleteReview
+  createProductReview, getProductRevviews, deleteReview
 } = require("../controllers/productController");
 const router = express.Router();
 const { isAuthenticate, authorizeRoles } = require("../middlewares/auth");
@@ -18,7 +18,7 @@ router
   .route("/admin/product/:id")
   .put(isAuthenticate, authorizeRoles("admin"), updateProduct)
   .delete(isAuthenticate, deleteProduct)
-  
+
 // router.route('/product/:id').delete(deleteProduct)
 // router.route('/product/:id').get(getProductDetails)
 

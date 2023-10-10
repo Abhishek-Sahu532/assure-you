@@ -30,8 +30,9 @@ exports.authorizeRoles = (...roles) => {
       if (!roles.includes(req.user.role)) {
         return res.status(400).send(`Role: ${req.user.role} is not allowed to access this resource`)
       }
+      next() //mainting the flow
     }
-    next()
+    
   } catch (e) {
     return res.status(500).send(e)
   }

@@ -89,12 +89,12 @@ exports.logOut = async (req, res, next) => {
   }
 };
 
-//forget password
+//forget //reset password
 
 exports.forgetPassword = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    console.log("user", user);
+    // console.log("user", user);
     if (!user) {
       return res.status(404).json({
         message: "User not found",
@@ -140,8 +140,11 @@ exports.forgetPassword = async (req, res, next) => {
   }
 };
 
+
+//CHANGING PASSWORD USING TOKEN
 exports.resetPassword = async (req, res, next) => {
   try {
+    console.log('fldsjafjalsj')
     //creating hashed token
     const resetPasswordTokenByUser = crypto
       .createHash("sha256")
@@ -198,7 +201,7 @@ exports.getUserDetails = async (req, res, next) => {
   }
 };
 
-//CHANGE PASSWORD
+//CHANGE PASSWORD - logged in
 
 exports.updatePassword = async (req, res, next) => {
   try {
