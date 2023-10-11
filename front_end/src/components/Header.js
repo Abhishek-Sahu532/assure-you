@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { ReactNavbar } from 'overlay-navbar';
 import logo from '../assets/images/logo.png'
@@ -21,9 +22,9 @@ const Header = () => {
       link4Text='About'
 
       link1Url='/'
-      link1Ur2='/product'
-      link1Ur3='/contact'
-      link1Ur4='/about'
+      link2Url='/product'
+      link3Url='/contact'
+      link4Url='/about'
       link1Size='1.2vmax'
       link1Color='rgba(35,35,35,0.8)'
       nav1justifyContent='flex-end'
@@ -33,7 +34,7 @@ const Header = () => {
       link2ColorHover='#eb4034'
       link3ColorHover='#eb4034'
       link4ColorHover='#eb4034'
-      link2Margin='1vmax'
+      link2Margin='1vmax' 
       profileIconColor='rgba(35,35,35,0.8)'
       searchIconColor='rgba(35,35,35,0.8)'
       cartIconColor='rgba(35,35,35,0.8)'
