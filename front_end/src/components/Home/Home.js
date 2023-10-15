@@ -1,22 +1,36 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { BiMouse } from "react-icons/bi";
 import "./Home.css";
 import Product from "./Product.js";
-import pic from "../../assets/images/top1.jpg";
 import { Metadata } from "../Metadata";
+import { getProduct } from '../../actions/productAction'
+import { useSelector, useDispatch } from 'react-redux'
+import Loader from '../Loader/Loader';
+import { useAlert } from "react-alert";
 
-
-
-const product = {
-  name: "blue shirt",
-  images: pic,
-  price: "R3000",
-  _id: "abishek",
-};
 
 const Home = () => {
+const alert = useAlert();
+
+  const dispatch = useDispatch();
+  const { loading, error, products } = useSelector(state => state.products)
+
+
+
+  useEffect(() => {
+    if(error){
+      return alert.error(error)
+    }
+    dispatch(getProduct())
+  }, [dispatch, error, alert])
+ 
   return (
-    <Fragment>
+<Fragment>
+  {
+    loading ? (
+      <Loader />
+    ) : (
+      <Fragment>
       <Metadata title='ECOMMERCE' />
       <div className="banner">
         <p>Welcome to Ecommerce</p>
@@ -30,17 +44,17 @@ const Home = () => {
       <h2 className="homeHeading">Featured Products</h2>
 
       <div className="container" id="container">
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
+        {products && products.map((product) => (
+          <Product product={product} />
+        ))}
 
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
       </div>
     </Fragment>
+    )
+  }
+</Fragment>
+
+    
   );
 };
 

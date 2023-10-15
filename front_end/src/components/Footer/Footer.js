@@ -1,6 +1,6 @@
 import React from "react";
-import appStore from '../assets/images/Appstore.png'
-import playstore from '../assets/images/playstore.png'
+import appStore from '../../assets/images/Appstore.png'
+import playstore from '../../assets/images/playstore.png'
 import './Footer.css'
 
 

@@ -35,13 +35,13 @@ exports.getProductDetails = async (req, res, next) => {
 
 //GET ALL PRODUCTS
 exports.getAllProducts = async (req, res) => {
-  const resultPerPage = 8;
+  const resultPerPage = 4;
   const apiFeature = new ApiFeature(Product.find(), req.query)
     .search()
     .filter()
     .pagination(resultPerPage);
 
-  const productCount = await Product.countDocuments();
+  const productsCount = await Product.countDocuments();
   // console.log(productCount)
   // const products = await Product.find();
   const products = await apiFeature.query;
@@ -50,9 +50,8 @@ exports.getAllProducts = async (req, res) => {
     .json({
       success: true,
       products,
-      productCount,
+      productsCount,
     })
-    .send();
 };
 
 //UPDATE PRODUCT - ONLY ADMIN HAS RIGHTS TO UPDATE ANY PRODUCT
