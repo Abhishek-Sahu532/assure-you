@@ -1,14 +1,14 @@
-import React, {Fragment, useEffect} from 'react'
-import Carousel from 'react-material-ui-carousel'
-import { useParams } from 'react-router-dom'
-import './ProductDetails.css'
-import {useDispatch, useSelector} from 'react-redux'
-import {getProductDetails} from '../../actions/productAction' 
+import React, {Fragment, useEffect} from 'react';
+import Carousel from 'react-material-ui-carousel';
+// import { useParams } from 'react-router-dom';
+import './ProductDetails.css';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProductDetails} from '../../actions/productAction' ;
 
 
 const ProductDetails = () => {
-    const {id} = useParams()
-    console.log('id', id)
+    // const {id} = useParams()
+    // console.log('id', id)
   const dispatch = useDispatch();
 
 const {product} = useSelector((state)=> state.productDetails);
@@ -19,7 +19,7 @@ console.log(product)
     // }
 
 
-  },[dispatch,id])
+  },[dispatch])
   
   return (
  <Fragment>

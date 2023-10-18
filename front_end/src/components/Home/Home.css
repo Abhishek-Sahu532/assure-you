@@ -83,7 +83,9 @@
 }
 
 .productCard > img {
-  width: 14vmax;
+  width: 16vmax;
+  border-radius: 5px;
+  align-items: center;
 }
 
 .productCard > div {
