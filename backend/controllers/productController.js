@@ -35,7 +35,7 @@ exports.getProductDetails = async (req, res, next) => {
 
 //GET ALL PRODUCTS
 exports.getAllProducts = async (req, res) => {
-  const resultPerPage = 4;
+  const resultPerPage = 8;
   const apiFeature = new ApiFeature(Product.find(), req.query)
     .search()
     .filter()
