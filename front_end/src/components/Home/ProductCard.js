@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import ReactStarts from "react-rating-stars-component";
 import pic from "../../assets/images/1.jpg";
 
-const Product = ({ product }) => {
-  console.log(pic)
+const ProductCard = ({ product }) => {
+  console.log(pic);
   const options = {
     edit: false,
     color: "rgba(20,20,20,0.1)",
@@ -13,7 +13,7 @@ const Product = ({ product }) => {
     value: product.ratings,
     isHalf: true,
   };
-  // const imageUrl = product; 
+  // const imageUrl = product;
   // console.log(imageUrl)
   // console.log(product.images[0].url);
   return (
@@ -31,4 +31,4 @@ const Product = ({ product }) => {
   );
 };
 
-export default Product;
+export default ProductCard;

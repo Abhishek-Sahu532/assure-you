@@ -3,14 +3,19 @@ import Carousel from "react-material-ui-carousel";
 import { useParams } from "react-router-dom";
 import "./ProductDetails.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetails } from "../../actions/productAction";
+import { clearErrors, getProductDetails } from "../../actions/productAction";
 import ReactStars from "react-rating-stars-component";
 import ReviewCard from "./ReviewCard";
 import Loader from "../Loader/Loader";
+import {useAlert} from 'react-alert'
+
+
 
 const ProductDetails = ({ match }) => {
   const { id } = useParams();
-  // console.log('id', id)
+   // console.log('id', id)
+  const alert = useAlert()
+ 
   const dispatch = useDispatch();
 
   const { product, loading, error } = useSelector(
@@ -19,10 +24,14 @@ const ProductDetails = ({ match }) => {
   // console.log(product)
 
   useEffect(() => {
-    // if (id) {
+  //  if(alert){
+  //   return alert.error(error)
+  //   //  dispatch(clearErrors())
+  //   //  return
+  //  }
     dispatch(getProductDetails(id));
-    // }
-  }, [dispatch, id]);
+
+  }, [dispatch, id,alert,error]);
 
   const options = {
     edit: false,

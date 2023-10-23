@@ -19,17 +19,13 @@ const options ={
 
 ReactDOM.render(
   <Provider store={store}>
-
-    <AlertProvider template={AlertTemplate} {...options} >
-<BrowserRouter>
-<App />
-</BrowserRouter>
-    
-
+    <AlertProvider template={AlertTemplate} {...options}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </AlertProvider>
- 
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

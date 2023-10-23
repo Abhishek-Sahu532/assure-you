@@ -80,7 +80,7 @@
   transition: all 0.5s;
   padding-bottom: 0.5vmax;
   border-radius: 5px;
-} 
+}
 
 .productCard > img {
   width: 16vmax;
@@ -132,7 +132,6 @@
     font-size: 1.5vmax;
   }
 
-  
   .productCard > div > span {
     margin: 0 0.5vmax;
     font: 300 1vmax "Roboto";
