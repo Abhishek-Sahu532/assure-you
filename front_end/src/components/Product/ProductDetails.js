@@ -11,9 +11,9 @@ import {useAlert} from 'react-alert'
 
 
 
-const ProductDetails = ({ match }) => {
+const ProductDetails = () => {
   const { id } = useParams();
-   // console.log('id', id)
+   console.log('id', id)
   const alert = useAlert()
  
   const dispatch = useDispatch();

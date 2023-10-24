@@ -4,7 +4,7 @@ import ReactStarts from "react-rating-stars-component";
 import pic from "../../assets/images/1.jpg";
 
 const ProductCard = ({ product }) => {
-  console.log(pic);
+
   const options = {
     edit: false,
     color: "rgba(20,20,20,0.1)",

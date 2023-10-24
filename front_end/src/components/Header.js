@@ -42,6 +42,7 @@ const Header = () => {
       searchIcon="true"
       searchIconColor="rgba(35, 35, 35,0.8)"
       SearchIconElement={MdSearch}
+      searchIconUrl="/search"
       cartIcon="true"
       cartIconColor="rgba(35, 35, 35,0.8)"
       CartIconElement={MdAddShoppingCart}
@@ -50,6 +51,7 @@ const Header = () => {
       searchIconHoverColor="#eb4034"
       cartIconHoverColor="#eb4034"
       cartIconMargin="1vmax"
+      cartIconUrl = "/cart"
     />
   );
 };
