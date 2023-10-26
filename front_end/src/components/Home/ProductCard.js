@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactStarts from "react-rating-stars-component";
-import pic from "../../assets/images/1.jpg";
 
 const ProductCard = ({ product }) => {
 

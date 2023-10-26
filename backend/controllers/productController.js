@@ -33,24 +33,35 @@ exports.getProductDetails = async (req, res, next) => {
   }
 };
 
+
 //GET ALL PRODUCTS
 exports.getAllProducts = async (req, res) => {
   const resultPerPage = 8;
+ 
+
   const apiFeature = new ApiFeature(Product.find(), req.query)
     .search()
     .filter()
     .pagination(resultPerPage);
 
-  const productsCount = await Product.countDocuments();
+
+    let products = await apiFeature.query;
+    const productsCount = await Product.countDocuments();
+let filteredProductsCount = products.length;
+
+apiFeature.pagination(resultPerPage);
+// products = await apiFeature.query;
   // console.log(productCount)
   // const products = await Product.find();
-  const products = await apiFeature.query;
+  
   return res
     .status(200)
     .json({
       success: true,
       products,
       productsCount,
+      resultPerPage,
+      filteredProductsCount
     })
 };
 
