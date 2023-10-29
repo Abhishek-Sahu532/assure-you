@@ -65,13 +65,13 @@
 .container {
   display: flex;
   margin: 2vmax auto;
-  width: 80vw;
+  width: 70vw;
   flex-wrap: wrap;
   justify-content: center;
   max-width: 100%;
 }
 .productCard {
-  width: 16vmax;
+  width: 13vmax;
   display: flex;
   flex-direction: column;
   text-decoration: none;

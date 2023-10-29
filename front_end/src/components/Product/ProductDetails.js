@@ -8,12 +8,12 @@ import ReactStars from "react-rating-stars-component";
 import ReviewCard from "./ReviewCard";
 import Loader from "../Loader/Loader";
 import {useAlert} from 'react-alert'
-
+import { Metadata } from "../Metadata";
 
 
 const ProductDetails = () => {
   const { id } = useParams();
-   console.log('id', id)
+  //  console.log('id', id)
   const alert = useAlert()
  
   const dispatch = useDispatch();
@@ -48,6 +48,7 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <Fragment>
+          <Metadata title={`${product.name} --Ecommerce`} />
           <div className="ProductDetails">
             <div>
               <Carousel>
@@ -103,7 +104,7 @@ const ProductDetails = () => {
 
           {/* REVIEW PART */}
 
-          <h3 className="reviewsHeading">REVIEWS</h3>
+          <h3 className="reviewHeading">REVIEWS</h3>
           {product.reviews && product.reviews[0] ? (
             <div className="reviews">
               {product.reviews &&

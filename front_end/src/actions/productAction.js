@@ -10,12 +10,20 @@ import {
     PRODUCT_DETAILS_SUCCESS
 } from '../constaints/productConstant';
 
-export const getProduct = (keyword = '', currentPage = 1,price=[0,25000]) => async (dispatch) => {
+export const getProduct = (keyword = '', currentPage = 1,price=[0,25000], category, rating=0) => async (dispatch) => {
     try {
         dispatch({ type: ALL_PRODUCT_REQUEST });
+ let url = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}`
+//IF THE USER SELECT ANY CATEGORY, THE URL WILL CHANGE ACCORDING TO THE LINK
 
-        const { data } = await axios.get(`/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`);
+if(category){
+  url = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&rating[gte]=${rating} `
+}
+ 
+ const { data } = await axios.get(url);
+        if(category){
 
+        }
         dispatch({
             type: ALL_PRODUCT_SUCCESS,
             payload: data

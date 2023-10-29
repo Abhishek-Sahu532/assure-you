@@ -8,15 +8,32 @@ import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
+import useAlert from 'react-alert'
+import {Metadata} from '../Metadata'
+
+
+
+const categories = [
+  "Laptop",
+  "Footwear",
+  "Bottom",
+  "Tops",
+  "Attire",
+  "Camera",
+  "SmartPhones",
+];
 
 const Products = () => {
   const dispatch = useDispatch();
-
+// const error = useAlert() --  ERROR NOT WORKING - WILL CHECK LATER
   // FOR PAGINATION
   const [currentPage, setCurrentPage] = useState();
 
   // FOR PRICE SELECTOR
   const [price, setPrice] = useState([0, 25000]);
+  const [category, setCategory] = useState("");
+
+  const [rating, setRating] = useState(0)
 
   const {
     products,
@@ -26,6 +43,8 @@ const Products = () => {
     resultPerPage,
     filteredProductsCount,
   } = useSelector((state) => state.products);
+
+// console.log(error)
 
   const { keyword } = useParams();
 
@@ -38,8 +57,8 @@ const Products = () => {
   };
 
   useEffect(() => {
-    dispatch(getProduct(keyword, currentPage, price));
-  }, [dispatch, keyword, currentPage, price]);
+    dispatch(getProduct(keyword, currentPage, price, category,rating ));
+  }, [dispatch, keyword, currentPage, price, category,rating]);
 
   let count = filteredProductsCount;
 
@@ -49,6 +68,7 @@ const Products = () => {
         <Loader />
       ) : (
         <Fragment>
+          
           <h2 className="productHeading">Products</h2>
           <div className="products">
             {products &&
@@ -68,6 +88,34 @@ const Products = () => {
               max={25000}
               valueLabelDisplay="auto"
             />
+
+            <Typography>Categories</Typography>
+            <ul className="categoryBox">
+              {categories.map((category) => (
+                <li
+                  className="category-link"
+                  key={category}
+                  onClick={() => setCategory(category)}
+                >
+                  {category}{" "}
+                </li>
+              ))}
+            </ul>
+
+            <fieldset>
+              <Typography>
+                <Slider
+                  value={rating}
+                  onChange={(e, newRating) => {
+                    setRating(newRating);
+                  }}
+                  aria-labelledby="continuous-slider"
+                  min={0}
+                  max={5}
+                  valueLabelDisplay="auto"
+                />
+              </Typography>
+            </fieldset>
           </div>
 
           {/* PAGINATION */}
