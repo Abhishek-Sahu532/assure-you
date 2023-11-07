@@ -17,7 +17,7 @@ export const getProduct = (keyword = '', currentPage = 1,price=[0,25000], catego
 //IF THE USER SELECT ANY CATEGORY, THE URL WILL CHANGE ACCORDING TO THE LINK
 
 if(category){
-  url = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&rating[gte]=${rating} `
+  url = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&rating[gte]=${rating}`
 }
  
  const { data } = await axios.get(url);

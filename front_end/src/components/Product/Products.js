@@ -1,15 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./Products.css";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getProduct } from "../../actions/productAction";
+import { getProduct } from "../../actions/productAction";
 import Loader from "../Loader/Loader";
 import ProductCard from "../Home/ProductCard";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
-import useAlert from 'react-alert'
-import {Metadata} from '../Metadata'
+// import {Metadata} from '../Metadata'
 
 
 
@@ -38,8 +37,7 @@ const Products = () => {
   const {
     products,
     loading,
-    error,
-    productsCount,
+       productsCount,
     resultPerPage,
     filteredProductsCount,
   } = useSelector((state) => state.products);
@@ -60,15 +58,12 @@ const Products = () => {
     dispatch(getProduct(keyword, currentPage, price, category,rating ));
   }, [dispatch, keyword, currentPage, price, category,rating]);
 
-  let count = filteredProductsCount;
-
   return (
     <Fragment>
       {loading ? (
         <Loader />
       ) : (
         <Fragment>
-          
           <h2 className="productHeading">Products</h2>
           <div className="products">
             {products &&
