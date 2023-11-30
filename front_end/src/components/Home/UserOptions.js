@@ -1,0 +1,71 @@
+import React, { Fragment, useState } from "react";
+import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import PersonIcon from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import { useNavigate } from 'react-router-dom';
+import { useAlert } from 'react-alert'
+import { logoutUser } from "../../actions/userAction";
+import { useDispatch } from "react-redux";
+import  Backdrop  from "@material-ui/core/Backdrop";
+
+
+const UserOptions = ({ user }) => {
+    const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
+    const alert = useAlert();
+const dispatch = useDispatch()
+
+    const options = [
+        { icon: <ListAltIcon />, name: 'Orders', func: orders },
+        { icon: <PersonIcon />, name: 'Profile', func: account },
+        { icon: <ExitToAppIcon />, name: "Logout", func: logout }
+    ];
+    if(user.role === 'admin'){
+        options.unshift({ icon: <DashboardIcon />, name: 'Dashboard', func: dashboard })
+    }
+    function dashboard() {
+        navigate('/dashboard')
+    }
+    function orders() {
+        navigate('/orders')
+    }
+    function account() {
+        navigate('/account')
+    };
+    function logout() {
+        dispatch(logoutUser());
+        alert.success('Logout Successfully')
+    }
+    return (
+        <Fragment>
+            {/* USED FOR HOVER EFFECT, WHEN USER HOVER ON THE BUTTON, IY WILL UPDATE A LAYER ON UI */}
+<Backdrop open={open} style={{zIndex : '10'}} /> 
+            <SpeedDial
+                ariaLabel="SpeedDial tooltip example"
+                onClose={() => { setOpen(false) }}
+                onOpen={() => setOpen(true)}
+                open={open}
+                direction="down"
+                className="speedDial"
+                style={{zIndex : '11'}}
+                icon={
+                    <img className="speedDialIcon"
+                        src={user.avatar.url ? user.avatar.url : './Profile.png'}
+                        alt="Profile" />
+                }
+            >
+
+                {options.map((item) => (
+                    <SpeedDialAction icon={item.icon}  key={item.name} tooltipTitle={item.name} onClick={item.func} />
+                ))}
+
+                {/* <SpeedDialAction icon={<DashboardIcon />} tooltipTitle='Dashboard' /> */}
+            </SpeedDial>
+        </Fragment>
+    )
+}
+
+
+export default UserOptions

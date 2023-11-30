@@ -37,7 +37,7 @@ exports.getProductDetails = async (req, res, next) => {
 //GET ALL PRODUCTS
 exports.getAllProducts = async (req, res) => {
   const resultPerPage = 8;
- 
+
 
   const apiFeature = new ApiFeature(Product.find(), req.query)
     .search()
@@ -45,15 +45,13 @@ exports.getAllProducts = async (req, res) => {
     .pagination(resultPerPage);
 
 
-    let products = await apiFeature.query;
-    const productsCount = await Product.countDocuments();
-let filteredProductsCount = products.length;
+  let products = await apiFeature.query;
 
-apiFeature.pagination(resultPerPage);
-// products = await apiFeature.query;
-  // console.log(productCount)
-  // const products = await Product.find();
-  
+  const productsCount = await Product.countDocuments();
+  let filteredProductsCount = products.length;
+  apiFeature.pagination(resultPerPage);
+
+  // console.log(products, productsCount)
   return res
     .status(200)
     .json({
@@ -194,16 +192,16 @@ exports.deleteReview = async (req, res, next) => {
 
     let avg = 0;
 
-   reviews.forEach((rev) => {
+    reviews.forEach((rev) => {
       avg += rev.rating;
     });
 
-   ratings = avg / reviews.length;
+    ratings = avg / reviews.length;
 
-   const numOfReviews = reviews.length;
+    const numOfReviews = reviews.length;
     await product.findByIdAndUpdate(req.query.productId, {
       reviews, ratings, numOfReviews
-    },{
+    }, {
       new: true,
       runValidators: true,
       useFindAndModify: false

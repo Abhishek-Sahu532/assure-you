@@ -24,7 +24,7 @@ const categories = [
 
 const Products = () => {
   const dispatch = useDispatch();
-// const error = useAlert() --  ERROR NOT WORKING - WILL CHECK LATER
+  // const error = useAlert() --  ERROR NOT WORKING - WILL CHECK LATER
   // FOR PAGINATION
   const [currentPage, setCurrentPage] = useState();
 
@@ -37,12 +37,11 @@ const Products = () => {
   const {
     products,
     loading,
-       productsCount,
+    productsCount,
     resultPerPage,
-    filteredProductsCount,
   } = useSelector((state) => state.products);
 
-// console.log(error)
+  // console.log(error)
 
   const { keyword } = useParams();
 
@@ -55,8 +54,8 @@ const Products = () => {
   };
 
   useEffect(() => {
-    dispatch(getProduct(keyword, currentPage, price, category,rating ));
-  }, [dispatch, keyword, currentPage, price, category,rating]);
+    dispatch(getProduct(keyword, currentPage, price, category, rating));
+  }, [dispatch, keyword, currentPage, price, category, rating]);
 
   return (
     <Fragment>

@@ -5,22 +5,22 @@ import { Link } from 'react-router-dom'
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import FaceIcon from '@material-ui/icons/Face'
-import {useDispatch, useSelector} from 'react-redux'
-import { clearErrors, login } from '../../actions/userAction'
-import {useAlert} from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import {  login, register } from '../../actions/userAction'
+import { useAlert } from 'react-alert'
+import { useNavigate } from 'react-router-dom'
 
 
+const LoginSingup = () => {
 
-const LoginSingup = ({history}) => {
+    const dispatch = useDispatch()
+    const alert = useAlert();
+const navigate = useNavigate()
+    //RECEIVING FROM DATABASE
+    const { error, loading, isAuthenticated } = useSelector((state) => state.user);
 
-const dispatch = useDispatch()
-const alert = useAlert();
 
-//RECEIVING FROM DATABASE
-const {error, loading, isAuthenticated} = useSelector((state)=> state.user);
-   
-
-const loginTab = useRef(null)
+    const loginTab = useRef(null)
     const registerTab = useRef(null)
     const switcherTab = useRef(null)
 
@@ -34,9 +34,11 @@ const loginTab = useRef(null)
         password: '',
     })
 
-    const { name, email, password } = user;
+    const { name, email, password } = user; //for signup
+
     const [avatar, setAvatar] = useState();
     const [avatarPreview, setAvatarPreview] = useState('./Profile.png')
+
     const loginSubmit = (e) => {
         e.preventDefault()
         console.log('Form Submit');
@@ -45,16 +47,16 @@ const loginTab = useRef(null)
 
 
 
-    useEffect(()=>{
-        if(error){
+    useEffect(() => {
+        if (error) {
             alert.error(error);
-            dispatch(clearErrors())
+            // dispatch(clearErrors())  
         };
-        if(isAuthenticated){ //IF THE USER IS ALREADY LOGGED IN, IT WILL PUSHED-REDIRECTED TO THE ACCOUNT PAGE
-            history.push('/account')
+        if (isAuthenticated) { //IF THE USER IS ALREADY LOGGED IN, IT WILL PUSHED-REDIRECTED TO THE ACCOUNT PAGE
+            navigate('/account')
         }
 
-    },[dispatch, error, alert, history, isAuthenticated])
+    }, [dispatch, error, alert,navigate, isAuthenticated])
 
     const switchTabs = (e, tab) => {
         if (tab === 'login') {
@@ -74,6 +76,31 @@ const loginTab = useRef(null)
         }
     }
 
+
+
+    const registerDataChange = (e) => {
+        if (e.target.name === 'avatar') {
+          const reader = new FileReader();
+      
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              const avatarDataUrl = reader.result;
+              setAvatarPreview(avatarDataUrl);
+              setAvatar(avatarDataUrl);
+              console.log(avatarDataUrl)
+            }
+          };
+      
+          reader.readAsDataURL(e.target.files[0]);
+        } else {
+          setUser((prevUser) => ({
+            ...prevUser,
+            [e.target.name]: e.target.value,
+          }));
+        }
+      };
+      
+
     const registerSubmit = (e) => {
         e.preventDefault();
         const myForm = new FormData();
@@ -81,91 +108,73 @@ const loginTab = useRef(null)
         myForm.set('email', email);
         myForm.set('password', password);
         myForm.set('avatar', avatar);
-
-
-        console.log('Signup form submiteed')
-
-
+        dispatch(register(myForm))
     }
 
 
-    const registerDataChange = (e) => {
-        if (e.target.name === 'avatar') {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setAvatarPreview(reader.result);
-                    setAvatar(reader.result);
-                };
-                reader.readAsDataURL(e.target.files[0]);
-            }
-        } else {
-            setUser({ ...user, [e.target.name]: [e.target.value] })
-        }
-    }
 
     return (
 
-<Fragment>
-    {loading ? <Loader/> :
-    
-    <Fragment>
-    <div className="LoginSignupContainer">
-        <div className="LoginSignupBox">
-            <div>
-                <div className="login_singup_toggle">
-                    <p onClick={(e) => switchTabs(e, 'login')}>LOGIN</p>
-                    <p onClick={(e) => switchTabs(e, 'register')}>REGISTER</p>
-                </div>
-                <button ref={switcherTab}></button>
-            </div>
+        <Fragment>
+            {loading ? <Loader /> :
 
-            <form className='loginForm' ref={loginTab} onSubmit={loginSubmit}>
-                <div className="loginEmail">
-                    <MailOutlineIcon />
-                    <input type="email" placeholder='Email' required value={loginEmail} onChange={(e) => { setLoginEmail(e.target.value) }} />
-                </div>
-                <div className="loginPassword">
-                    <LockOpenIcon />
-                    <input type='password' placeholder='Password' required value={loginPassword} onChange={(e) => { setLoginPassword(e.target.value) }} />
-                </div>
+                <Fragment>
+                    <div className="LoginSignupContainer">
+                        <div className="LoginSignupBox">
+                            <div>
+                                <div className="login_singup_toggle">
+                                    <p onClick={(e) => switchTabs(e, 'login')}>LOGIN</p>
+                                    <p onClick={(e) => switchTabs(e, 'register')}>REGISTER</p>
+                                </div>
+                                <button ref={switcherTab}></button>
+                            </div>
 
-                <Link to='/password/forget'>Forget Password</Link>
-                <input type="submit" value='Login' className='loginBtn' />
-            </form>
-            <form className='signUpForm'
-                ref={registerTab}
-                encType='multipart/form-data'
-                onSubmit={registerSubmit} >
+                            <form className='loginForm' ref={loginTab} onSubmit={loginSubmit}>
+                                <div className="loginEmail">
+                                    <MailOutlineIcon />
+                                    <input type="email" placeholder='Email' required value={loginEmail} onChange={(e) => { setLoginEmail(e.target.value) }} />
+                                </div>
+                                <div className="loginPassword">
+                                    <LockOpenIcon />
+                                    <input type='password' placeholder='Password' required value={loginPassword} onChange={(e) => { setLoginPassword(e.target.value) }} />
+                                </div>
 
-                <div className="singUpName">
-                    <FaceIcon />
-                    <input type="text" placeholder='Name' required name='name' value={name} onChange={registerDataChange} />
-                </div>
-                <div className="signUpEmail">
-                    <MailOutlineIcon />
-                    <input type="email" placeholder='Email' required name='email' value={email} onChange={registerDataChange} />
-                </div>
-                <div className="signUpPassword">
-                    <LockOpenIcon />
-                    <input type="password" placeholder='Password' required name='password' value={password} onChange={registerDataChange} />
-                </div>
-                <div id='registerImage'>
-                    <img src={avatarPreview} alt="Avatar Preview" />
-                    <input type="file" name='avatar' accept='image/*' onChange={registerDataChange} />
+                                <Link to='/password/forget'>Forget Password</Link>
+                                <input type="submit" value='Login' className='loginBtn' />
+                            </form>
+                            <form className='signUpForm'
+                                ref={registerTab}
+                                encType='multipart/form-data'
+                                onSubmit={registerSubmit} >
 
-                </div>
-                <input type="submit" value='Register' className='signupBtn' />
-            </form>
-        </div>
-    </div>
+                                <div className="singUpName">
+                                    <FaceIcon />
+                                    <input type="text" placeholder='Name' required name='name' value={name} onChange={registerDataChange} />
+                                </div>
+                                <div className="signUpEmail">
+                                    <MailOutlineIcon />
+                                    <input type="email" placeholder='Email' required name='email' value={email} onChange={registerDataChange} />
+                                </div>
+                                <div className="signUpPassword">
+                                    <LockOpenIcon />
+                                    <input type="password" placeholder='Password' required name='password' value={password} onChange={registerDataChange} />
+                                </div>
+                                <div id='registerImage'>
+                                    <img src={avatarPreview} alt="Avatar Preview" />
+                                    <input type="file" name='avatar' accept='image/*' onChange={registerDataChange} />
 
-
-</Fragment>}
-</Fragment>
+                                </div>
+                                <input type="submit" value='Register' className='signupBtn' />
+                            </form>
+                        </div>
+                    </div>
 
 
-       
+                </Fragment>}
+        </Fragment>
+
+
+
     )
 }
 

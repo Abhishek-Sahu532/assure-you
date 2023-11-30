@@ -3,29 +3,40 @@ const User = require("../models/userModel");
 const sendToken = require("../utils/sendToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const cloudinary = require('cloudinary');
+
+
 
 //REGISTER A USER
 
 exports.registerUser = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
 
+    // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    //   folder: "avatars",
+    //   width: 150,
+    //   crop: "scale",
+    // });
+
+//CLOUDINARY NOT WORKING, WILL LOOK INOT IT.
+    const { name, email, password } = req.body
     const user = await User.create({
       name,
       email,
       password,
       avatar: {
-        public_id: "publicid",
-        url: "url1",
+        public_id: "myCloud.public_id",
+        url: "myCloud.secure_url",
       },
     });
-
+    console.log('abc2', user)
     if (!name || !email || !password) {
       return res.status(404).json({
         message: "Please provide the required information",
       });
     }
-    return sendToken(user, 201, res);
+    sendToken(user, 201, res);
+
   } catch (e) {
     if (e.code === 11000) {
       return res.status(400).json({
@@ -188,9 +199,14 @@ exports.resetPassword = async (req, res, next) => {
 exports.getUserDetails = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
+
     if (!user) {
-      return;
+      return res.status(200).json({
+        success: false,
+        message: 'User not found',
+      });
     }
+    
     return res.status(200).json({
       success: true,
       user,

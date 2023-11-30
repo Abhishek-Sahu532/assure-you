@@ -14,7 +14,7 @@ class ApiFeature {
         }
       : {};
 
-    // console.log(keyword);
+    // console.log('keyword', keyword);
 
     this.query = this.query.find({ ...keyword });
     // console.log(this)
@@ -35,7 +35,7 @@ class ApiFeature {
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
 
     this.query = this.query.find(JSON.parse(queryStr));
-
+    // console.log('query from fileter', this.query)
     return this;
   }
 
@@ -43,6 +43,7 @@ class ApiFeature {
     const currentPage = Number(this.queryStr.page) || 1;
     const skip = resultPerPage * (currentPage - 1); // skipping the previous shown result
     this.query = this.query.limit(resultPerPage).skip(skip);
+    // console.log('query', this.query)
     return this;
   }
 }

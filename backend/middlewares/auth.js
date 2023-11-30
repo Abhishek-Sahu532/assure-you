@@ -7,7 +7,7 @@ exports.isAuthenticate = async (req, res, next) => {
     const { token } = req.cookies;
     // console.log(token);
     if (!token) {
-      return res.status('401').json({
+      return res.status(401).json({
         message: 'Please login to access this resources'
       })
     }
