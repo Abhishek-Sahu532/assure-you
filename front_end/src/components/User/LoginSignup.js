@@ -6,7 +6,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import FaceIcon from '@material-ui/icons/Face'
 import { useDispatch, useSelector } from 'react-redux'
-import {  login, register } from '../../actions/userAction'
+import { login, register } from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,7 +15,7 @@ const LoginSingup = () => {
 
     const dispatch = useDispatch()
     const alert = useAlert();
-const navigate = useNavigate()
+    const navigate = useNavigate()
     //RECEIVING FROM DATABASE
     const { error, loading, isAuthenticated } = useSelector((state) => state.user);
 
@@ -41,7 +41,7 @@ const navigate = useNavigate()
 
     const loginSubmit = (e) => {
         e.preventDefault()
-        console.log('Form Submit');
+        // console.log('Form Submit');
         dispatch(login(loginEmail, loginPassword))
     }
 
@@ -56,7 +56,7 @@ const navigate = useNavigate()
             navigate('/account')
         }
 
-    }, [dispatch, error, alert,navigate, isAuthenticated])
+    }, [dispatch, error, alert, navigate, isAuthenticated])
 
     const switchTabs = (e, tab) => {
         if (tab === 'login') {
@@ -80,26 +80,26 @@ const navigate = useNavigate()
 
     const registerDataChange = (e) => {
         if (e.target.name === 'avatar') {
-          const reader = new FileReader();
-      
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              const avatarDataUrl = reader.result;
-              setAvatarPreview(avatarDataUrl);
-              setAvatar(avatarDataUrl);
-              console.log(avatarDataUrl)
-            }
-          };
-      
-          reader.readAsDataURL(e.target.files[0]);
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    const avatarDataUrl = reader.result;
+                    setAvatarPreview(avatarDataUrl);
+                    setAvatar(avatarDataUrl);
+                    // console.log(avatarDataUrl)
+                }
+            };
+
+            reader.readAsDataURL(e.target.files[0]);
         } else {
-          setUser((prevUser) => ({
-            ...prevUser,
-            [e.target.name]: e.target.value,
-          }));
+            setUser((prevUser) => ({
+                ...prevUser,
+                [e.target.name]: e.target.value,
+            }));
         }
-      };
-      
+    };
+
 
     const registerSubmit = (e) => {
         e.preventDefault();

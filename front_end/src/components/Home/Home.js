@@ -2,11 +2,11 @@ import React, { Fragment, useEffect } from "react";
 import { BiMouse } from "react-icons/bi";
 import "./Home.css";
 import ProductCard from "./ProductCard.js";
-import { Metadata } from "../Metadata";
 import { clearErrors, getProduct } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Loader/Loader";
 import { useAlert } from "react-alert";
+import Metadata from "../Metadata.js";
 
 const Home = () => {
   const alert = useAlert();

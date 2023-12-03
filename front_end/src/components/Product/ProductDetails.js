@@ -8,7 +8,7 @@ import ReactStars from "react-rating-stars-component";
 import ReviewCard from "./ReviewCard";
 import Loader from "../Loader/Loader";
 import {useAlert} from 'react-alert'
-import { Metadata } from "../Metadata";
+import  Metadata  from "../Metadata.js";
 
 
 const ProductDetails = () => {
