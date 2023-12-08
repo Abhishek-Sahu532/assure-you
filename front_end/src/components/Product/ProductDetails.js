@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import { useParams } from "react-router-dom";
 import "./ProductDetails.css";
@@ -7,15 +7,17 @@ import { getProductDetails } from "../../actions/productAction";
 import ReactStars from "react-rating-stars-component";
 import ReviewCard from "./ReviewCard";
 import Loader from "../Loader/Loader";
-import {useAlert} from 'react-alert'
-import  Metadata  from "../Metadata.js";
-
+import { useAlert } from 'react-alert'
+import Metadata from "../Metadata.js";
+import { addItemsToCart } from "../../actions/cartAction.js";
 
 const ProductDetails = () => {
+
+
   const { id } = useParams();
   //  console.log('id', id)
   const alert = useAlert()
- 
+
   const dispatch = useDispatch();
 
   const { product, loading, error } = useSelector(
@@ -23,15 +25,38 @@ const ProductDetails = () => {
   );
   // console.log(product)
 
+  const [quantity, setQuantity] = useState(1)
+
+  const increaseQty = () => {
+    if (product.stock <= quantity) { //will not increase greater than the product stock
+      return
+    }
+    const qty = quantity + 1;
+    setQuantity(qty)
+  }
+
+  const decreaseQty = () => {
+    if (1 >= quantity) {
+      return
+    }
+    const qty = quantity - 1;
+    setQuantity(qty)
+  }
+
+
+  const addToCartHandler = ()=>{
+    dispatch(addItemsToCart(id, quantity));
+    alert.success('Added To Cart');
+  }
   useEffect(() => {
-  //  if(alert){
-  //   return alert.error(error)
-  //   //  dispatch(clearErrors())
-  //   //  return
-  //  }
+    if (alert) {
+      alert.error(error)
+      //  dispatch(clearErrors())
+      //  return
+    }
     dispatch(getProductDetails(id));
 
-  }, [dispatch, id,alert,error]);
+  }, [dispatch, id, alert, error]);
 
   const options = {
     edit: false,
@@ -81,11 +106,11 @@ const ProductDetails = () => {
                 <h1> {product.price} </h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsblock-3-1-1">
-                    <button>-</button>
-                    <input value="1" type="number" />
-                    <button>+</button>
+                    <button onClick={decreaseQty}>-</button>
+                    <input readOnly value={quantity} type="number" />
+                    <button onClick={increaseQty}>+</button>
                   </div>
-                  <button>Add to Cart</button>
+                  <button onClick={addToCartHandler} >Add to Cart</button>
                 </div>
                 <p>
                   Status :
@@ -119,4 +144,6 @@ const ProductDetails = () => {
   );
 };
 
+
+// ProductDetails.whyDidYouRender = true
 export default ProductDetails;

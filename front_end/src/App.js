@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./App.css";
 import Header from "./components/Header";
 import WebFont from "webfontloader";
@@ -19,12 +19,22 @@ import UpdateProfile from './components/User/UpdateProfile.js'
 import UpdatePassword from './components/User/UpdatePassword.js'
 import ForgetPassword from './components/User/ForgetPassword.js'
 import ResetPassword from './components/User/ResetPassword.js'
-
+import Cart from './components/Cart/Cart.js'
+import Shipping from './components/Cart/Shipping.js'
+import ConfirmOrder from './components/Cart/ConfirmOrder.js'
+import axios from 'axios';
+import Payment from './components/Cart/Payment.js'
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.user)
+  const { isAuthenticated, user } = useSelector((state) => state.user);
 
-  console.log('user from useroptions', user, 'isAuthenticated', isAuthenticated)
+  console.log('>>>>>>>>', isAuthenticated)
+  const [stripeKey, setStripeKey] = useState('');
+
+  async function getStripeApiKey() {
+    const { data } = await axios.get('/api/v1/stripeapikey');
+    setStripeKey(data.stripeApiKey);
+  }
 
   useEffect(() => {
     WebFont.load(
@@ -33,7 +43,7 @@ function App() {
           families: ["Roboto", "Droid Sans", "Chilanka"],
         },
       });
-
+    getStripeApiKey();
     store.dispatch(loadUser()) //when user logged in, In the homepage the details of user will load
   }, []);
   return (
@@ -54,10 +64,16 @@ function App() {
 
         <Route exact path='/password/update' element={<ProtectedRoute isAuthenticated={isAuthenticated} />} Component={UpdatePassword} />
 
-        <Route exact path='/forget/password' Component={ForgetPassword} />
-
+        <Route exact path='/password/forget' Component={ForgetPassword} />
 
         <Route exact path='/password/reset/"token' Component={ResetPassword} />
+        <Route exact path='/cart' Component={Cart} />
+
+        <Route exact path='/cart/shipping' isAuthenticated={isAuthenticated} element={<ProtectedRoute isAuthenticated={isAuthenticated} />} Component={Shipping} />
+
+        <Route exact path='/order/confirm' element={<ProtectedRoute isAuthenticated={isAuthenticated} />} Component={ConfirmOrder} />
+
+        <Route exact path='/process/payment' element={<ProtectedRoute isAuthenticated={isAuthenticated} />} Component={Payment} />
 
       </Routes>
       <Footer />

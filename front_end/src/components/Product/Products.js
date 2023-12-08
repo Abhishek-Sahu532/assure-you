@@ -137,4 +137,6 @@ const Products = () => {
   );
 };
 
+
+// Products.whyDidYouRender = true
 export default Products;

@@ -10,12 +10,15 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@mui/icons-material": "^5.14.19",
-    "@mui/material": "^5.14.19",
+    "@mui/material": "^5.14.20",
     "@mui/material-next": "^6.0.0-alpha.107",
     "@mui/styles": "^5.14.13",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.9.7",
+    "@stripe/react-stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^2.2.0",
     "axios": "^1.5.1",
+    "country-state-city": "^3.2.1",
     "framer-motion": "^6.5.1",
     "overlay-navbar": "^1.2.3",
     "react": "^17.0.2",
@@ -60,5 +63,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.92.52:6000"
+  "proxy": "http://192.168.203.52:6000"
 }

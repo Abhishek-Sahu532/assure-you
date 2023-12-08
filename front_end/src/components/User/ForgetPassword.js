@@ -5,15 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { forgetPassword} from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import Metadata from '../Metadata'
-
-
-
 import MailOutline from "@material-ui/icons/MailOutline"
 
 
-
 const ForgetPassword = ()=>{
-
     const dispatch = useDispatch()
     const alert = useAlert();
     //RECEIVING FROM DATABASE
@@ -26,6 +21,7 @@ const forgetPasswordSubmit = (e) => {
     const myForm = new FormData();
     myForm.set('email', email);
     dispatch(forgetPassword(myForm))
+    console.log(myForm)
 }
 
 

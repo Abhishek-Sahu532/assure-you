@@ -9,16 +9,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login, register } from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import { useNavigate } from 'react-router-dom'
-
+import { useLocation } from 'react-router-dom';
 
 const LoginSingup = () => {
-
+    const location = useLocation();
     const dispatch = useDispatch()
     const alert = useAlert();
     const navigate = useNavigate()
     //RECEIVING FROM DATABASE
     const { error, loading, isAuthenticated } = useSelector((state) => state.user);
-
 
     const loginTab = useRef(null)
     const registerTab = useRef(null)
@@ -46,17 +45,19 @@ const LoginSingup = () => {
     }
 
 
+    const redirect =  location.search ? location.search.split('=')[1] : '/account'
 
     useEffect(() => {
         if (error) {
             alert.error(error);
             // dispatch(clearErrors())  
         };
+        
         if (isAuthenticated) { //IF THE USER IS ALREADY LOGGED IN, IT WILL PUSHED-REDIRECTED TO THE ACCOUNT PAGE
-            navigate('/account')
+            navigate(redirect)
         }
 
-    }, [dispatch, error, alert, navigate, isAuthenticated])
+    }, [dispatch, error, alert, navigate, isAuthenticated,redirect])
 
     const switchTabs = (e, tab) => {
         if (tab === 'login') {
