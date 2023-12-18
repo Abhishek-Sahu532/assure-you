@@ -11,7 +11,6 @@ import Slider from "@material-ui/core/Slider";
 // import {Metadata} from '../Metadata'
 
 
-
 const categories = [
   "Laptop",
   "Footwear",
@@ -67,7 +66,7 @@ const Products = () => {
           <div className="products">
             {products &&
               products.map((product) => (
-                <ProductCard product={product} key={product.id} />
+                <ProductCard product={product} key={product._id} />
               ))}
           </div>
 

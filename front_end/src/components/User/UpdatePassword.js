@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import './UpdatePassword.css'
 import Loader from '../Loader/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { updatePassword } from '../../actions/userAction'
+import { clearErrors, updatePassword } from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import { useNavigate } from 'react-router-dom'
 import { UPDATE_PASSWORD_RESET } from '../../constaints/userConstants';
@@ -11,7 +11,7 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 
-const UpdatePassword = ({isAuthenticated}) => {
+const UpdatePassword = ({ isAuthenticated }) => {
     const dispatch = useDispatch()
     const alert = useAlert();
     const navigate = useNavigate()
@@ -31,27 +31,37 @@ const UpdatePassword = ({isAuthenticated}) => {
         myForm.set('newPassword', newPassword);
         myForm.set('confirmPassword', confirmPassword);
         dispatch(updatePassword(myForm))
-        console.log(oldPassword,newPassword, confirmPassword )
+        console.log(oldPassword, newPassword, confirmPassword)
     }
 
 
     useEffect(() => {
-        if (isAuthenticated === false) {
-            return navigate('/login');
-          }
 
-        if (error) {
-            alert.error(error);
-            // dispatch(clearErrors())  
+        let isMounted = true;
+
+        const cleanUp = () => {
+            isMounted = false;
+            dispatch(clearErrors())  
         };
-        if (isUpdated) {
-            alert.success('Password Change Successfully');
-            navigate('/account')
-            dispatch({
-                type: UPDATE_PASSWORD_RESET,
-            })
+
+        if (isMounted) {
+            if (isAuthenticated === false) {
+                return navigate('/login');
+            }
+            if (error) {
+                alert.error(error);
+                dispatch(clearErrors())
+            };
+            if (isUpdated) {
+                alert.success('Password Change Successfully');
+                navigate('/account')
+                dispatch({
+                    type: UPDATE_PASSWORD_RESET,
+                })
+            }
         }
-    }, [dispatch,isAuthenticated, error, alert, navigate, isUpdated])
+        return cleanUp;
+    }, [dispatch, isAuthenticated, error, alert, navigate, isUpdated])
 
 
 

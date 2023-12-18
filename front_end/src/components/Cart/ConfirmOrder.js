@@ -7,14 +7,15 @@ import { Typography } from "@material-ui/core";
 import './ConfirmOrder.css'
 import { useNavigate } from "react-router-dom";
 
+
+
 const ConfirmOrder = () => {
 
     const { shippingInfo, cartItems } = useSelector((state) => state.cart);
     const { user } = useSelector((state) => state.user);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const subtotal = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
-
     const shippingCharges = subtotal > 1000 ? 0 : 200;
     const tax = subtotal * 0.18;
     const totalPrice = subtotal + tax + shippingCharges;
@@ -37,9 +38,9 @@ const ConfirmOrder = () => {
 
             <div className="confirmOrderPage">
                 <div>
-                    <div className="confirmshippingArea">
+                    <div className="confirmShippingArea">
                         <Typography >Shipping Info</Typography>
-                        <div className="confirmshippingAreaBox">
+                        <div className="confirmShippingAreaBox">
                             <div>
                                 <p>Name :</p>
                                 <span>{user.name}</span>
@@ -93,7 +94,7 @@ const ConfirmOrder = () => {
                             </p>
                             <span>₹{totalPrice}</span>
                         </div>
-                        <button>Proceed To Payment</button>
+                        <button onClick={proceedToPayment}>Proceed To Payment</button>
                     </div>
                 </div>
             </div>

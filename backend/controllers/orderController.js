@@ -60,11 +60,11 @@ exports.getSingleOrder = async (req, res, next) => {
 //myorders for logged in user 
 exports.myOrders = async (req, res, next) => {
   try {
-    const order = await Order.find({ user: req.user._id });// will check, not working
+    const orders = await Order.find({ user: req.user._id });// will check, not working
     // console.log(req.user._id)
     return res.status(200).json({
       success: true,
-      order,
+      orders,
     });
   } catch (e) {
     console.log(e);
@@ -95,40 +95,43 @@ exports.getAllOrders = async (req, res, next) => {
 
 //UPDATE ORDER STATUS-- ADMIN
 
-exports.updateOrder = async (req, res, next)=>{
-  try{
-const order = await Order.findById(req.params.id);
-if (!order) {
-  return res.status(404).json({
-    message: "Order not found",
-  });
-}
-if(order.orderStatus === 'Delivered'){
-  return res.status(404).json({
-    message: 'You have already delivered this order'
+exports.updateOrder = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({
+        message: "Order not found",
+      });
+    }
+    if (order.orderStatus === 'Delivered') {
+      return res.status(404).json({
+        message: 'You have already delivered this order'
+      })
+    }
+
+if(req.body.status === 'Shipped'){
+  order.orderItem.forEach(async o => {
+    await updateStock(o.product, o.quantity)
   })
-} 
-
-order.orderItem.forEach(async o  =>{
-  await updateStock(o.product, o.quantity)
-})
-
-
-order.orderStatus = req.body.status;
-
-
-if(req.body.status==='Delivered'){
-  order.deliveredAt = Date.now()
 }
- 
+    
 
-await order.save({validateBeforeSave: false})
-return res.status(200).json({
-  message: true,
-  order
-})
 
-  }catch(e){
+    order.orderStatus = req.body.status;
+
+
+    if (req.body.status === 'Delivered') {
+      order.deliveredAt = Date.now()
+    }
+
+
+    await order.save({ validateBeforeSave: false })
+    return res.status(200).json({
+      message: true,
+      order
+    })
+
+  } catch (e) {
     console.log(e);
     return res.status(500).send(e);
   }
@@ -136,12 +139,12 @@ return res.status(200).json({
 
 
 
-async function updateStock (id, quantity){
-const product = await Product.findById(id);
+async function updateStock(id, quantity) {
+  const product = await Product.findById(id);
 
- product.stock = product.stock - quantity;
+  product.stock = product.stock - quantity;
 
- await product.save({validateBeforeSave: false})
+  await product.save({ validateBeforeSave: false })
 
 }
 

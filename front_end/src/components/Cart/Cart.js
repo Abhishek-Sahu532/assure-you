@@ -1,4 +1,4 @@
-import React, { Fragment,useEffect } from "react";
+import React, { Fragment } from "react";
 import "./Cart.css";
 import CartItemsCard from "./CartItemsCard";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 // import Loader from "../Loader/Loader";
 
 
-const Cart = ({isAuthenticated}) => {
+const Cart = () => {
 
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import './Shipping.css'
-import {useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartAction";
 import Metadata from "../Metadata";
 import PinDropIcon from '@mui/icons-material/PinDrop';
@@ -15,36 +15,36 @@ import CheckoutSteps from '../Cart/CheckoutSteps.js'
 import { useNavigate } from 'react-router-dom';
 
 
-const Shipping = ({isAuthenticated}) => {
+const Shipping = () => {
 
     const dispatch = useDispatch();
     const alert = useAlert();
-    const { shippingInfo } = useSelector((state) => state.cart);
-const navigate = useNavigate();
+    // const { shippingInfo } = useSelector((state) => state.cart);
+    const navigate = useNavigate();
 
-    const [address, setAddress] = useState(shippingInfo.address);
-    const [city, setCity] = useState(shippingInfo.city)
-    const [state, setState] = useState(shippingInfo.state);
-    const [country, setCountry] = useState(shippingInfo.country);
-    const [pincode, setPincode] = useState(shippingInfo.pincode);
-    const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("")
+    const [state, setState] = useState("");
+    const [country, setCountry] = useState("");
+    const [pincode, setPincode] = useState();
+    const [phoneNo, setPhoneNo] = useState();
 
 
-const shippingSubmit =(e)=>{
-e.preventDefault();
-if(phoneNo.length < 10 || phoneNo.length > 10){
-    alert.error('Phone number should be 10 digit');
-    return
-}
-dispatch(saveShippingInfo({address, city, state, country, pincode, phoneNo}));
-navigate('/order/confirm');
-}
+    const shippingSubmit = (e) => {
+        e.preventDefault();
+        if (phoneNo.length < 10 || phoneNo.length > 10) {
+            alert.error('Phone number should be 10 digit');
+            return
+        }
+        dispatch(saveShippingInfo({ address, city, state, country, pincode, phoneNo }));
+        navigate('/order/confirm');
+    }
 
 
     return (
         <Fragment>
-            <Metadata  title='Shipping Details'/>
-<CheckoutSteps activeStep={0} />
+            <Metadata title='Shipping Details' />
+            <CheckoutSteps activeStep={0} />
             {/* will continue from here */}
             <div className="shippingContainer">
                 <div className="shippingBox">
@@ -92,7 +92,7 @@ navigate('/order/confirm');
 
                             </div>
                         )}
-                        <input type="submit" value='Continue' className="shippingBtn" disabled={state ? false : true } />
+                        <input type="submit" value='Continue' className="shippingBtn" disabled={state ? false : true} />
                     </form>
                 </div>
             </div>

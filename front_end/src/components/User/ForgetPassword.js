@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import './ForgetPassword.css'
 import Loader from '../Loader/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { forgetPassword} from '../../actions/userAction'
+import {clearErrors, forgetPassword} from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import Metadata from '../Metadata'
 import MailOutline from "@material-ui/icons/MailOutline"
@@ -28,7 +28,7 @@ const forgetPasswordSubmit = (e) => {
 useEffect(() => {
     if (error) {
         alert.error(error);
-        // dispatch(clearErrors())  
+        dispatch(clearErrors())  
     };
     if (message) { 
        alert.success(message);

@@ -6,7 +6,7 @@ const { newOrder, getSingleOrder, myOrders, getAllOrders, updateOrder, deleteOrd
 
 router.route('/order/new').post(isAuthenticate, newOrder)
 router.route('/order/me').get(isAuthenticate,  myOrders)
-router.route('/order/:id').get(isAuthenticate, authorizeRoles('admin'), getSingleOrder)
+router.route('/order/:id').get(isAuthenticate, getSingleOrder)
 
 router.route('/admin/orders').get(isAuthenticate, authorizeRoles('admin'), getAllOrders);
 router.route('/admin/order/:id').put(isAuthenticate, authorizeRoles('admin'), updateOrder).delete(isAuthenticate, authorizeRoles('admin'),deleteOrder)

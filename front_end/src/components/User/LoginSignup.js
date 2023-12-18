@@ -6,7 +6,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import FaceIcon from '@material-ui/icons/Face'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, register } from '../../actions/userAction'
+import { clearErrors, login, register } from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
@@ -45,19 +45,31 @@ const LoginSingup = () => {
     }
 
 
-    const redirect =  location.search ? location.search.split('=')[1] : '/account'
+    const redirect = location.search ? location.search.split('=')[1] : '/account'
 
     useEffect(() => {
-        if (error) {
-            alert.error(error);
-            // dispatch(clearErrors())  
-        };
-        
-        if (isAuthenticated) { //IF THE USER IS ALREADY LOGGED IN, IT WILL PUSHED-REDIRECTED TO THE ACCOUNT PAGE
-            navigate(redirect)
-        }
+        let isMounted = true;
 
-    }, [dispatch, error, alert, navigate, isAuthenticated,redirect])
+        const cleanUp = () => {
+            isMounted = false;
+            
+
+        };
+        if (isMounted) {
+            if (error) {
+                alert.error(error);
+                dispatch(clearErrors())
+            };
+
+            if (isAuthenticated) { //IF THE USER IS ALREADY LOGGED IN, IT WILL PUSHED-REDIRECTED TO THE ACCOUNT PAGE
+                navigate("/account")
+            } else {
+                navigate("/login")
+            }
+        }
+        return cleanUp;
+
+    }, [dispatch, error, alert, navigate, isAuthenticated, redirect])
 
     const switchTabs = (e, tab) => {
         if (tab === 'login') {

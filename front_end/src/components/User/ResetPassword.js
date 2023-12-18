@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import './ResetPassword.css'
 import Loader from '../Loader/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { resetPassword } from '../../actions/userAction'
+import {clearErrors, resetPassword } from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import { useNavigate } from 'react-router-dom'
 import Metadata from '../Metadata'
@@ -36,7 +36,7 @@ const ResetPassword = () => {
     useEffect(() => {
             if (error) {
             alert.error(error);
-            // dispatch(clearErrors())  
+            dispatch(clearErrors())  
         };
         if (success) {
             alert.success('Password Change Successfully');

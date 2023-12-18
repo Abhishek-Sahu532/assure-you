@@ -4,6 +4,8 @@ import { useNavigate, Routes, Route } from "react-router-dom";
 
 const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
+
+  console.log(loading, isAuthenticated, user)
   const navigate = useNavigate();
   return (
     <Fragment>

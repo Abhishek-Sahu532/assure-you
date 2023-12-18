@@ -56,6 +56,7 @@ const {error, isUpdated, loading} = useSelector((state)=> state.profile);
 
 
     useEffect(() => {
+        
         if(user){
             setName(user.name);
             setEmail(user.email);

@@ -13,6 +13,10 @@
   font: 400 1.8vmax "Roboto";
 }
 
+.confirmShippingArea {
+  padding: 5vmax;
+  padding-top: 2vmax;
+}
 .confirmShippingAreaBox,
 .confirmCartItemsContainer {
   margin: 2vmax;
