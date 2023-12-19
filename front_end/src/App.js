@@ -37,6 +37,10 @@ import OrderList from "./components/Admin/OrderList.js";
 import ProcessOrder from "./components/Admin/ProcessOrder.js";
 import UsersList from "./components/Admin/UsersList.js";
 import UpdateUser from "./components/Admin/UpdateUser.js";
+import ProductReview from "./components/Admin/ProductReview.js";
+import NotFound from './components/NotFound/NotFound.js'
+
+
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -92,6 +96,24 @@ function App() {
         <Route path="/products/:keyword" Component={Products} />
         <Route exact path="/search" Component={Search} />
         <Route exact path="/login" Component={LoginSingup} />
+
+
+
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/account" element={<Profile />} />
+          <Route path="/me/update/" element={<UpdateProfile />} />
+          <Route path="/password/update" element={<UpdatePassword />} />
+          <Route path="/password/forget" element={<ForgetPassword />} />
+          <Route path="/password/reset/:token" element={<ResetPassword />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart/shipping" element={<Shipping />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/orders" element={<MyOrders />} />
+          <Route path="/order/confirm" element={<ConfirmOrder />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
+
+        </Route>
+        {/*         
         <Route
           path="/account/"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
@@ -139,10 +161,10 @@ function App() {
           path="/orders"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={MyOrders}
-        />
+        /> */}
 
-        {/* <Switch> */}
-        <Route
+
+        {/* <Route
           exact
           path="/order/confirm"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
@@ -152,8 +174,8 @@ function App() {
           path="/order/:id"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={OrderDetails}
-        />
-        {/* </Switch> */}
+        /> */}
+
 
         <Route
           path="/admin/dashboard"
@@ -214,6 +236,19 @@ function App() {
           }
           Component={UpdateUser}
         />
+
+
+        <Route
+          path="/admin/reviews"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
+          Component={ProductReview}
+        />
+
+        <Route Component={window.location.pathname === '/process/payment' ? null : NotFound}
+        />
+
       </Routes>
 
       <Footer />

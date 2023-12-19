@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from "redux";
 import thunk from "redux-thunk";
-import { productsReducer, productDetailsReducer, newReviewReducer, productReducer, newProductReducer } from "./reducers/productReducer";
+import { productsReducer, productDetailsReducer, newReviewReducer, productReducer, newProductReducer, productReviewsReducer, reviewReducer } from "./reducers/productReducer";
 import { profileReducer, userReducer, forgetPasswordReducer, allUsersReducer, userDetailsReducer } from './reducers/userReducer'
 import { cartReducer } from './reducers/cartReducer';
 import { myOrderReducer, newOrderReducer, orderDetailsReducer, allOrdersReducer, orderReducer } from './reducers/orderReducer';
@@ -22,7 +22,9 @@ const reducer = combineReducers({
   allOrders : allOrdersReducer,
   order : orderReducer,
   allUsers : allUsersReducer,
-  userDetails : userDetailsReducer
+  userDetails : userDetailsReducer,
+  productReviews : productReviewsReducer,
+  review: reviewReducer
 });
 
 // console.log('...........', reducer.orderDetails)

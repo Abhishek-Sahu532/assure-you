@@ -280,7 +280,14 @@ exports.deleteReview = async (req, res, next) => {
       avg += rev.rating;
     });
 
-    ratings = avg / reviews.length;
+    let ratings = 0;
+    if (reviews.length === 0) {
+      ratings = 0
+    } else {
+      ratings = avg / reviews.length;
+
+    }
+
 
     const numOfReviews = reviews.length;
     await product.findByIdAndUpdate(req.query.productId, {

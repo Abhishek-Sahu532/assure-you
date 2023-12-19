@@ -25,6 +25,11 @@ const Dashboard = () => {
     //     }
     // });
 
+let totalAmount = 0;
+orders && orders.forEach((item)=>{
+    totalAmount += item.totalPrice
+})
+
     useEffect(() => {
         dispatch(getAdminProducts());
         dispatch(getAllOrders())
@@ -63,7 +68,7 @@ const Dashboard = () => {
                 <div className="dashboardSummary">
                     <div>
                         <p>
-                            Total Amount <br /> Rs 2000
+                            Total Amount <br /> Rs {totalAmount}
                         </p>
                     </div>
                     <div className="dashboardSummaryBox2">
