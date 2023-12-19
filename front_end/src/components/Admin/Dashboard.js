@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar.js";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 // import { Doughnut, Line } from 'react-chartjs-2';
-import { getAdminProducts, clearErrors } from "../../actions/productAction";
+import { getAdminProducts } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { getAllOrders } from "../../actions/orderAction.js";
@@ -14,22 +14,22 @@ const Dashboard = () => {
 
     const dispatch = useDispatch();
     const alert = useAlert();
-    const {  products } = useSelector((state) => state.products);
+    const { products } = useSelector((state) => state.products);
     const { orders } = useSelector((state) => state.allOrders);
     const { users } = useSelector((state) => state.allUsers);
- 
-    let outOfStock = 0; //how many products are out of stock;
-    products && products.forEach((item) => {
-        if (item.stock === 0) {
-            outOfStock += 1;
-        }
-    });
+
+    // let outOfStock = 0; //how many products are out of stock;
+    // products && products.forEach((item) => {
+    //     if (item.stock === 0) {
+    //         outOfStock += 1;
+    //     }
+    // });
 
     useEffect(() => {
         dispatch(getAdminProducts());
         dispatch(getAllOrders())
         dispatch(getAllUsers())
-    }, [error, dispatch, alert])
+    }, [dispatch, alert])
 
     // const lineState = {
     //     labels: ['Initial Amount', 'Amount Earned'],
@@ -73,7 +73,7 @@ const Dashboard = () => {
                         </Link>
                         <Link to='/admin/orders'>
                             <p>Orders</p>
-                            <p>{orders && orders.length }</p>
+                            <p>{orders && orders.length}</p>
                         </Link>
                         <Link to='/admin/users'>
                             <p>Users</p>

@@ -11,34 +11,31 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
 import { Button } from "@material-ui/core";
-import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
 import "./processOrder.css";
 import Metadata from "../Metadata";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
+import { UPDATE_ORDER_RESET } from "../../constaints/orderConstant";
+
+
 
 const ProcessOrder = () => {
   const { order, error, loading } = useSelector((state) => state.orderDetails);
   const { error: updateError, isUpdated } = useSelector((state) => state.order);
-
-const navigate= useNavigate();
-const {id} = useParams();
-
+  console.log(">>>>>>>>>>", order);
+  // const navigate= useNavigate();
+  const { id } = useParams();
 
   const updateOrderSubmitHandler = (e) => {
     e.preventDefault();
-
     const myForm = new FormData();
-
     myForm.set("status", status);
-
     dispatch(updateOrder(id, myForm));
   };
 
   const dispatch = useDispatch();
   const alert = useAlert();
-
   const [status, setStatus] = useState("");
 
   useEffect(() => {
@@ -90,7 +87,8 @@ const {id} = useParams();
                     <div>
                       <p>Address:</p>
                       <span>
-                        {order && order.shippingInfo &&
+                        {order &&
+                          order.shippingInfo &&
                           `${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.pinCode}, ${order.shippingInfo.country}`}
                       </span>
                     </div>

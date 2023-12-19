@@ -6,13 +6,14 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import FaceIcon from '@material-ui/icons/Face'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearErrors, login, register } from '../../actions/userAction'
+import { login, register } from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import { useNavigate } from 'react-router-dom'
-import { useLocation } from 'react-router-dom';
+import {profilePic} from '../../assets/images/Profile.png'
+
 
 const LoginSingup = () => {
-    const location = useLocation();
+    // const location = useLocation();
     const dispatch = useDispatch()
     const alert = useAlert();
     const navigate = useNavigate()
@@ -36,7 +37,7 @@ const LoginSingup = () => {
     const { name, email, password } = user; //for signup
 
     const [avatar, setAvatar] = useState();
-    const [avatarPreview, setAvatarPreview] = useState('./Profile.png')
+    const [avatarPreview, setAvatarPreview] = useState({profilePic})
 
     const loginSubmit = (e) => {
         e.preventDefault()
@@ -45,31 +46,19 @@ const LoginSingup = () => {
     }
 
 
-    const redirect = location.search ? location.search.split('=')[1] : '/account'
+    // const redirect = location.search ? location.search.split('=')[1] : '/account'
 
     useEffect(() => {
-        let isMounted = true;
-
-        const cleanUp = () => {
-            isMounted = false;
-            
-
-        };
-        if (isMounted) {
             if (error) {
                 alert.error(error);
-                dispatch(clearErrors())
+                // dispatch(clearErrors())
             };
-
             if (isAuthenticated) { //IF THE USER IS ALREADY LOGGED IN, IT WILL PUSHED-REDIRECTED TO THE ACCOUNT PAGE
                 navigate("/account")
             } else {
                 navigate("/login")
             }
-        }
-        return cleanUp;
-
-    }, [dispatch, error, alert, navigate, isAuthenticated, redirect])
+    }, [dispatch, error, alert, navigate, isAuthenticated])
 
     const switchTabs = (e, tab) => {
         if (tab === 'login') {

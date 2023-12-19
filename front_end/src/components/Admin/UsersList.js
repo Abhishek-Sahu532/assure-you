@@ -9,9 +9,9 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SideBar from "./Sidebar";
 import { getAllUsers, clearErrors, deleteUser } from "../../actions/userAction";
-import { DELETE_USER_RESET } from "../../constants/userConstants";
 import Metadata from "../Metadata";
 import { useNavigate } from "react-router-dom";
+import { DELETE_USER_RESET } from "../../constaints/userConstants";
 
 
 
@@ -51,7 +51,7 @@ const UsersList = ({ history }) => {
     }
 
     dispatch(getAllUsers());
-  }, [dispatch, alert, error, deleteError, history, isDeleted, message]);
+  }, [dispatch, alert, error, deleteError, navigate, isDeleted, message]);
 
   const columns = [
     { field: "id", headerName: "User ID", minWidth: 180, flex: 0.8 },

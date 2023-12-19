@@ -6,7 +6,6 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PersonIcon from "@material-ui/icons/Person";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import SideBar from "./Sidebar";
-import { UPDATE_USER_RESET } from "../../constants/userConstants";
 import {
   getUserDetails,
   updateUser,
@@ -16,6 +15,9 @@ import Metadata from "../Metadata";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
+import { UPDATE_USER_RESET } from "../../constaints/userConstants";
+
+
 
 const UpdateUser = () => {
   const dispatch = useDispatch();

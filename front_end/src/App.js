@@ -29,17 +29,14 @@ import { loadStripe } from "@stripe/stripe-js";
 import Success from "./components/Cart/Success";
 import MyOrders from "./components/Order/MyOrders";
 import OrderDetails from "./components/Order/OrderDetails";
-import Dashboard from './components/Admin/Dashboard'
-import ProductList from './components/Admin/ProductList'
+import Dashboard from "./components/Admin/Dashboard";
+import ProductList from "./components/Admin/ProductList";
 import NewProduct from "./components/Admin/NewProducts.js";
 import UpdateProduct from "./components/Admin/UpdateProduct.js";
 import OrderList from "./components/Admin/OrderList.js";
 import ProcessOrder from "./components/Admin/ProcessOrder.js";
 import UsersList from "./components/Admin/UsersList.js";
 import UpdateUser from "./components/Admin/UpdateUser.js";
-
-
-
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -59,13 +56,11 @@ function App() {
           families: ["Roboto", "Droid Sans", "Chilanka"],
         },
       });
-
       async function getStripeApiKey() {
         const { data } = await axios.get("/api/v1/stripeapikey");
         setStripeKey(data.stripeApiKey);
         // console.log("stripekey", stripeKey);
       }
-
       getStripeApiKey();
       store.dispatch(loadUser()); //when user logged in, In the homepage the details of user will load
     }
@@ -91,7 +86,6 @@ function App() {
       )}
 
       <Routes>
-
         <Route exact path="/" Component={Home} />
         <Route path="/product/:id" Component={ProductDetails} />
         <Route exact path="/products" Component={Products} />
@@ -104,12 +98,14 @@ function App() {
           Component={Profile}
         />
 
-
         <Route
-
-          element={<ProtectedRoute exact
-            path="/me/update/*" component={UpdateProfile} />}
-
+          element={
+            <ProtectedRoute
+              exact
+              path="/me/update/*"
+              component={UpdateProfile}
+            />
+          }
         />
 
         <Route
@@ -161,46 +157,61 @@ function App() {
 
         <Route
           path="/admin/dashboard"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
           Component={Dashboard}
         />
         <Route
           path="/admin/products"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
           Component={ProductList}
         />
         <Route
           path="/admin/product"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
           Component={NewProduct}
         />
 
         <Route
           path="/admin/product/:id"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
           Component={UpdateProduct}
         />
-          <Route
+        <Route
           path="/admin/orders"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
           Component={OrderList}
         />
- <Route
+        <Route
           path="/admin/order/:id"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
           Component={ProcessOrder}
         />
 
-<Route
+        <Route
           path="/admin/users"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
           Component={UsersList}
         />
 
-
-<Route
+        <Route
           path="/admin/user/:id"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
+          }
           Component={UpdateUser}
         />
       </Routes>

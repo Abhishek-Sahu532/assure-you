@@ -22,8 +22,8 @@ import {
 } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import { NEW_REVIEW_RESET } from "../../constaints/productConstant.js";
-
-
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -119,7 +119,8 @@ const ProductDetails = () => {
           <Metadata title={`${product.name} --Ecommerce`} />
           <div className="ProductDetails">
             <div>
-              <Carousel>
+              <Carousel  fullHeightHover={false} navButtonsProps={{style: { backgroundColor: 'transparent',  borderRadius: 0
+        }}}     NextIcon={< ArrowRightIcon/ >}  PrevIcon={<ArrowLeftIcon/ >} autoPlay='true'  animation='fade' > 
                 {product.images &&
                   product.images.map((item, i) => (
                     <img

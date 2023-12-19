@@ -29,19 +29,19 @@ const ProductList = () => {
     const columns = [
         { field: 'id', headerName: 'Product ID', minWidth: 200, flex: 0.5 },
         {
-            field: 'name', headerName: "Name", minWidth: 350, flex: 1
+            field: 'name', headerName: "Name", minWidth: 200, flex: 0.5 
         },
         {
-            field: 'stock', headerName: "Stock", minWidth: 350, flex: 0.3, type: 'number'
+            field: 'stock', headerName: "Stock", minWidth: 150, flex: 0.1, type: 'number'
         },
         {
-            field: 'price', headerName: "Price", minWidth: 270, flex: 0.5, type: 'number'
+            field: 'price', headerName: "Price", minWidth: 270, flex: 0.3, type: 'number'
         },
         {
             field: 'actions', flex: 0.3, headerName: "Actions", minWidth: 150, type: 'number', sortable: false, renderCell: (params) => {
                 return (
                     <Fragment>
-                        <Link to={`/admin/products/${params.getValue(params.id, 'id')}`}><EditIcon /> </Link>
+                        <Link to={`/admin/product/${params.getValue(params.id, 'id')}`}><EditIcon /> </Link>
                         <Button onClick={() => { deleteProductHandler(params.getValue(params.id, 'id')) }}><DeleteIcon /> </Button>
                     </Fragment>
                 )

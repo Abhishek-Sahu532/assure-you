@@ -5,19 +5,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { Button } from "@material-ui/core";
-import MetaData from "./MetaData";
+import Metadata from "../Metadata";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SideBar from "./Sidebar";
 import {
   deleteOrder,
   getAllOrders,
-  updateOrder,
   clearErrors,
 } from "../../actions/orderAction";
-import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 import { useNavigate } from "react-router-dom";
-
+import { DELETE_ORDER_RESET } from "../../constaints/orderConstant";
 
 const OrderList = () => {
   const dispatch = useDispatch();
@@ -115,7 +113,7 @@ const navigate = useNavigate();
     orders.forEach((item) => {
       rows.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.orderItem.length,
         amount: item.totalPrice,
         status: item.orderStatus,
       });
@@ -123,7 +121,7 @@ const navigate = useNavigate();
 
   return (
     <Fragment>
-      <MetaData title={`ALL ORDERS - Admin`} />
+      <Metadata title={`ALL ORDERS - Admin`} />
 
       <div className="dashboard">
         <SideBar />
