@@ -29,7 +29,7 @@ exports.createProduct = async (req, res, next) => {
   }
 
   req.body.user = req.user.id;
-  req.body.image = imagesLink
+  req.body.images = imagesLink
   const product = await Product.create(req.body);
 
   res.status(201).json({
@@ -217,7 +217,7 @@ exports.createProductReview = async (req, res, next) => {
         }
       });
     } else {
-      product.review.push(review);
+      product.reviews.push(review);
       product.numOfReviews = product.reviews.length;
     }
     // overall ratings

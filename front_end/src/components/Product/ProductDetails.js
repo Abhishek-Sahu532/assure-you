@@ -13,17 +13,11 @@ import Loader from "../Loader/Loader";
 import { useAlert } from "react-alert";
 import Metadata from "../Metadata.js";
 import { addItemsToCart } from "../../actions/cartAction.js";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Button,
-} from "@material-ui/core";
+import {  Dialog,  DialogActions,  DialogContent,  DialogTitle,  Button,} from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import { NEW_REVIEW_RESET } from "../../constaints/productConstant.js";
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -79,6 +73,7 @@ const ProductDetails = () => {
 
   const reviewSubmitHandler = () => {
     const myForm = new FormData();
+
     myForm.set("rating", rating);
     myForm.set("comment", comment);
     myForm.set("productId", id);
@@ -91,8 +86,8 @@ const ProductDetails = () => {
 
     const cleanUp = () => {
       isMounted = false;
-      dispatch(clearErrors());
-    }
+      // dispatch(clearErrors());
+    };
     if (isMounted) {
       if (error) {
         alert.error(error);
@@ -107,7 +102,7 @@ const ProductDetails = () => {
       }
       dispatch(getProductDetails(id));
     }
-    return cleanUp
+    return cleanUp;
   }, [dispatch, id, alert, error, reviewError, success]);
 
   return (
@@ -119,8 +114,16 @@ const ProductDetails = () => {
           <Metadata title={`${product.name} --Ecommerce`} />
           <div className="ProductDetails">
             <div>
-              <Carousel  fullHeightHover={false} navButtonsProps={{style: { backgroundColor: 'transparent',  borderRadius: 0
-        }}}     NextIcon={< ArrowRightIcon/ >}  PrevIcon={<ArrowLeftIcon/ >} autoPlay='true'  animation='fade' > 
+              <Carousel
+                fullHeightHover={false}
+                navButtonsProps={{
+                  style: { backgroundColor: "transparent", borderRadius: 0 },
+                }}
+                NextIcon={<ArrowRightIcon />}
+                PrevIcon={<ArrowLeftIcon />}
+                autoPlay="true"
+                animation="fade"
+              >
                 {product.images &&
                   product.images.map((item, i) => (
                     <img
@@ -153,15 +156,10 @@ const ProductDetails = () => {
                 <div className="detailsBlock-3-1">
                   <div className="detailsblock-3-1-1">
                     <button onClick={decreaseQty}>-</button>
-                    <input readOnly value={quantity} type="number" />
+                    <input readOnly name="qty" value={quantity} type="number" />
                     <button onClick={increaseQty}>+</button>
                   </div>
-                  <button
-
-                    onClick={addToCartHandler}
-                  >
-                    Add to Cart
-                  </button>
+                  <button onClick={addToCartHandler}>Add to Cart</button>
                 </div>
                 <p>
                   Status :
@@ -174,7 +172,7 @@ const ProductDetails = () => {
               <div className="detailsBlock-4">
                 Description : <p>{product.description} </p>
               </div>
-              <button className="submitReview" onSubmit={submitReviewToggle}>
+              <button className="submitReview" onClick={submitReviewToggle}>
                 Submit Review
               </button>
             </div>
@@ -192,7 +190,7 @@ const ProductDetails = () => {
             <DialogTitle>Submit Review</DialogTitle>
             <DialogContent className="submitDialog">
               <Rating
-                onChange={(e) => setRating(e.target.value)}
+                onChange={(e) => Number(setRating(e.target.value))}
                 value={rating}
                 size="large"
               />
@@ -211,7 +209,7 @@ const ProductDetails = () => {
                 {" "}
                 Cancel
               </Button>
-              <Button color="primary" onSubmit={reviewSubmitHandler}>
+              <Button color="primary" onClick={reviewSubmitHandler}>
                 Submit
               </Button>
             </DialogActions>

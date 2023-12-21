@@ -122,7 +122,7 @@ export const forgetPassword= (email) => async (dispatch) => {
         dispatch({ type: FORGET_PASSWORD_REQUEST });
         const config = { headers: { 'Content-Type': 'application/json' } };
         const { data } = await axios.post(
-            `/api/v1/forget/password`,
+            `/api/v1/password/forget`,
              email ,
             config
         );
@@ -140,7 +140,7 @@ export const resetPassword= (token, passwords) => async (dispatch) => {
         dispatch({ type: RESET_PASSWORD_REQUEST });
         const config = { headers: { 'Content-Type': 'application/json' } };
         const { data } = await axios.put(
-            `/api/v1/reset/password/${token}`,
+            `/api/v1/password/reset/${token}`,
              passwords ,
             config
         );

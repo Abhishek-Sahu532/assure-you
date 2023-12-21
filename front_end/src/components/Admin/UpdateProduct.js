@@ -61,7 +61,7 @@ const UpdateProduct = () => {
             setDescription(product.description);
             setPrice(product.price);
             setCategory(product.category);
-            setStock(product.Stock);
+            setStock(product.stock);
             setOldImages(product.images);
         }
         if (error) {

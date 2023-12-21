@@ -21,7 +21,6 @@ const forgetPasswordSubmit = (e) => {
     const myForm = new FormData();
     myForm.set('email', email);
     dispatch(forgetPassword(myForm))
-    console.log(myForm)
 }
 
 
@@ -45,13 +44,11 @@ useEffect(() => {
                 <div className="forgetPasswordContainer">
                     <div className="forgetPasswordBox">
                         <h2 className='forgetPasswordHeading'>Forget Password</h2>
-                        <form className='forgetPasswordForm'               onSubmit={forgetPasswordSubmit} >
-
+                        <form className='forgetPasswordForm' onSubmit={forgetPasswordSubmit} >
                             <div className="loginPassword">
                                 <MailOutline />
                                 <input type='email' placeholder='E-mail' required value={email} onChange={(e) => { setEmail(e.target.value) }} />
                             </div>
-
                             <input type="submit" value='Send' className='forgetPasswordBtn' />
                         </form>
                     </div></div>

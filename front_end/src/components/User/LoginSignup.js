@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login, register } from '../../actions/userAction'
 import { useAlert } from 'react-alert'
 import { useNavigate } from 'react-router-dom'
-import {profilePic} from '../../assets/images/Profile.png'
+
 
 
 const LoginSingup = () => {
@@ -37,7 +37,7 @@ const LoginSingup = () => {
     const { name, email, password } = user; //for signup
 
     const [avatar, setAvatar] = useState();
-    const [avatarPreview, setAvatarPreview] = useState({profilePic})
+    const [avatarPreview, setAvatarPreview] = useState('./Profile.png')
 
     const loginSubmit = (e) => {
         e.preventDefault()

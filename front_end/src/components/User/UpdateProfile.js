@@ -23,8 +23,8 @@ const {error, isUpdated, loading} = useSelector((state)=> state.profile);
     const [avatar, setAvatar] = useState();
     const [avatarPreview, setAvatarPreview] = useState('./Profile.png');
 
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
+    const [name, setName] = useState(user.name)
+    const [email, setEmail] = useState(user.email)
     
     const updateProfileSubmit = (e) => {
         e.preventDefault();
@@ -46,12 +46,9 @@ const {error, isUpdated, loading} = useSelector((state)=> state.profile);
                     const avatarDataUrl = reader.result;
                     setAvatarPreview(avatarDataUrl);
                     setAvatar(avatarDataUrl);
-                    console.log(avatarDataUrl)
                 }
             };
-
             reader.readAsDataURL(e.target.files[0]);
-        
     };
 
 

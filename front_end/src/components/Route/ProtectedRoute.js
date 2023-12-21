@@ -4,13 +4,15 @@ import {Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = ({ isAdmin, isAuthenticated}) => {
 
-if(isAuthenticated && isAdmin){
-  return < Outlet />
-}
+  if(!isAuthenticated){
+    return <Navigate to={'/login'}/>
+  }
 
-if(!isAuthenticated){
-  return <Navigate to={'/login'}/>
-}
+// if(isAuthenticated && isAdmin){
+  return < Outlet />
+// }
+
+
 
 
 }

@@ -10,7 +10,7 @@ import { logoutUser } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import Backdrop from "@material-ui/core/Backdrop";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { profilePic } from "../../assets/images/Profile.png";
+
 
 const UserOptions = ({ user }) => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -75,7 +75,7 @@ const UserOptions = ({ user }) => {
         icon={
           <img
             className="speedDialIcon"
-            src={user.avatar.url ? user.avatar.url : { profilePic }}
+            src={user.avatar.url ? user.avatar.url : './Profile.png' }
             alt="Profile"
           />
         }
