@@ -1,0 +1,24 @@
+.navbar {
+  background-color: #000;
+  position: fixed;
+  color: #49c5b6;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  z-index: 2;
+  height: 5vmax;
+ 
+}
+
+.logo {
+  width: 7vmax;
+  height: 5vmax;
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: #7286d3;
+  font: 800 1.1vmax "Roboto";
+}

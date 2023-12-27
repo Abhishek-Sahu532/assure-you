@@ -1,12 +1,13 @@
 .profileContainer {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  /* height: 70vh; */
   position: fixed;
   top: 0%;
   left: 0%;
   max-width: 100%;
   background-color: white;
+  margin-top: 6vmax;
 }
 
 .profileContainer > div {
@@ -37,7 +38,7 @@
 
 .profileContainer > div:first-child > a {
   border: none;
-  background-color: tomato;
+  background-color: #7286d3;
   font: 400 1vmax "Roboto";
   color: white;
   text-decoration: none;
@@ -49,7 +50,7 @@
 }
 
 .profileContainer > div:first-child > a:hover {
-  background-color: rgb(204, 78, 56);
+  background-color: #7286d3
 }
 
 .profileContainer > div:last-child {
@@ -95,6 +96,7 @@
 @media screen and (max-width: 600px) {
   .profileContainer {
     flex-direction: column;
+    margin-top: 16vmax;
   }
 
   .profileContainer > div:first-child > h1 {

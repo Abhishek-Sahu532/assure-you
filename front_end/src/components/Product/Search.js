@@ -10,7 +10,6 @@ const navigate = useNavigate()
 
   const searchSubmitHandler =  (e) => {
     e.preventDefault();
- 
     console.log("keywordFromSearchComp", keyword)
     
     if (keyword.trim()) {

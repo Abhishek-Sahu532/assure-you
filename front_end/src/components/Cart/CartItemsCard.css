@@ -28,7 +28,7 @@
 }
 
 .cartItemCard > div > p {
-  color: tomato;
+  color: #7286d3;
   cursor: pointer;
   font: 100 0.8vmax "Roboto";
 }

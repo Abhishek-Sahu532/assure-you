@@ -9,8 +9,6 @@
 
 .ProductDetails > div {
   width: 100%;
-  /* display: flex; */
-  justify-content: space-evenly;
   align-items: center;
   padding: 2vmax;
   box-sizing: border-box;
@@ -22,15 +20,22 @@
   flex-direction: column;
 }
 
-.CarouselImage {
-  width: 20vmax;
-  border-radius: 10px;
+.productDetailsCarousel{
+  position: relative;
+  margin-top: 60px; 
+}
 
+.CarouselImage {
+  width: 22vmax;
+  border-radius: 10px;
+  border: 1px solid red;
+  margin-left: 7vmax;
+  height: 32vmax;
 }
 
 .detailsBlock-1 > h2 {
   color: rgb(54, 54, 54);
-  font: 600 1.6vmax "Roboto";
+  font: 600 2vmax "Roboto";
 }
 
 .detailsBlock-1 > p {
@@ -91,7 +96,7 @@
   cursor: pointer;
   color: white;
   transition: all 0.5s;
-  background-color: tomato;
+  background-color: #7286d3;
   font: 500 0.7max "Roboto";
   border-radius: 20px;
   padding: 0.5vmax 2vmax;
@@ -100,7 +105,7 @@
 }
 
 .detailsBlock-3-1 > button:last-child:hover {
-  background-color: rgb(214, 84, 61);
+  background-color: #7286d3;
 }
 
 .detailsBlock-3 > p {
@@ -118,8 +123,9 @@
 }
 
 .detailsBlock-4 > p {
-  color: rgba(0, 0, 0, 0.534);
-  font: 300 0.8vmax sans-serif;
+  color: black;
+  font: 400 1.3vmax sans-serif;
+  line-height: 1.8vmax;
 }
 
 .submitReview {
@@ -136,22 +142,21 @@
 }
 
 .submitReview:hover {
-  background-color: rgb(197, 68, 45);
+  background-color: #7286d3;
   transform: scale(1.1);
 }
 
-.submitDialogTextArea{
+.submitDialogTextArea {
   border: 1px solid rgba(0, 0, 0, 0.282);
   margin: 1vmax 0;
   outline: none;
   padding: 1rem;
-  font: 300 1rem 'Roboto';
+  font: 300 1rem "Roboto";
 }
 
-
-.submitDialog{
+.submitDialog {
   display: flex;
-  flex-direction: column  ;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 600px) {
@@ -163,6 +168,11 @@
   .ProductDetails > div:last-child {
     align-items: center;
   }
+  .CarouselImage {
+    align-self: center;
+    align-items: center;
+  }
+
   .detailsBlock-1 > h2 {
     font-size: 2.8vmax;
     text-align: center;
@@ -179,8 +189,8 @@
     font-size: 1.5vmax;
   }
 
-  .detailsBlock-3 > h1 {
-    font: 700 3vmax "Franklin Gothic Medium";
+  .detailsBlock-3 > h3 {
+    font: 700 1vmax "Franklin Gothic Medium";
     text-align: center;
   }
   .detailsBlock-3-1 {
@@ -222,10 +232,10 @@
     margin: 3vmax 0;
   }
 
-  .reviewCard > p{
-    font: 600 3vw 'Roboto';
+  .reviewCard > p {
+    font: 600 3vw "Roboto";
   }
-  .reviewCardComment{
+  .reviewCardComment {
     font: 300 5vw cursive;
   }
 }

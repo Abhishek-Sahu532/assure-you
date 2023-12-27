@@ -10,7 +10,7 @@ import { logoutUser } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import Backdrop from "@material-ui/core/Backdrop";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
+import './Home.css'
 
 const UserOptions = ({ user }) => {
   const { cartItems } = useSelector((state) => state.cart);

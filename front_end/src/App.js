@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Header from "./components/Header";
 import WebFont from "webfontloader";
 import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home.js";
@@ -39,6 +38,7 @@ import UsersList from "./components/Admin/UsersList.js";
 import UpdateUser from "./components/Admin/UpdateUser.js";
 import ProductReview from "./components/Admin/ProductReview.js";
 import NotFound from "./components/NotFound/NotFound.js";
+import Navbar from "./components/Navbar/Navbar.js";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -71,8 +71,6 @@ function App() {
   }, [stripeKey]);
   return (
     <div className="App">
-      <Header />
-
       {isAuthenticated && <UserOptions user={user} />}
       {stripeKey && (
         <Elements stripe={loadStripe(stripeKey)}>
@@ -87,6 +85,7 @@ function App() {
         </Elements>
       )}
 
+      <Navbar />
       <Routes>
         <Route exact path="/" Component={Home} />
         <Route path="/product/:id" Component={ProductDetails} />
@@ -97,9 +96,9 @@ function App() {
         <Route path="/password/forget" Component={ForgetPassword} />
         <Route path="/password/reset/:token" Component={ResetPassword} />
 
-        {/* <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />} >
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />} >
           <Route path="/account" element={<Profile />} />
-          <Route path="/me/update/" element={<UpdateProfile />} />
+          <Route path="/me/update" element={<UpdateProfile />} />
           <Route path="/password/update" element={<UpdatePassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart/shipping" element={<Shipping />} />
@@ -107,7 +106,7 @@ function App() {
           <Route path="/orders" element={<MyOrders />} />
           <Route path="/order/confirm" element={<ConfirmOrder />} />
           <Route path="/order/:id" element={<OrderDetails />} />
-        </Route> */}
+        </Route>
 
         <Route
           path="/account/"

@@ -75,6 +75,7 @@ const ProductList = () => {
             alert.success('Products Delete Successfully');
             navigate('/admin/dashboard');
             dispatch({ type: DELETE_PRODUCT_RESET })
+            
         }
         dispatch(getAdminProducts())
     }, [dispatch, alert, error, isDeleted, deleteError, navigate])
@@ -86,7 +87,7 @@ const ProductList = () => {
                 <div className="productListContainer">
                     <h1 id='productListHeading' >All Products</h1>
 
-                    <DataGrid rows={rows} columns={columns} pageSize={8} disableSelectionOnClick className="productListTable" autoHeight />
+                    <DataGrid rows={rows} columns={columns} pageSize={6} disableSelectionOnClick className="productListTable" autoHeight />
                 </div>
             </div>
         </Fragment>

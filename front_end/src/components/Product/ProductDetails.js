@@ -13,11 +13,20 @@ import Loader from "../Loader/Loader";
 import { useAlert } from "react-alert";
 import Metadata from "../Metadata.js";
 import { addItemsToCart } from "../../actions/cartAction.js";
-import {  Dialog,  DialogActions,  DialogContent,  DialogTitle,  Button,} from "@material-ui/core";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import { NEW_REVIEW_RESET } from "../../constaints/productConstant.js";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import { styled } from "@mui/material/styles";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -64,13 +73,24 @@ const ProductDetails = () => {
   const submitReviewToggle = () => {
     open ? setOpen(false) : setOpen(true);
   };
+
   const options = {
-    size: "large",
+    size: "medium",
     value: product.ratings || 0,
     readOnly: true,
     precision: 0.5,
+    name: "customized-color",
+    // getLabelText :  product.ratings || 0,
   };
 
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: "#ff6d75",
+    },
+    "& .MuiRating-iconHover": {
+      color: "#ff3d47",
+    },
+  });
   const reviewSubmitHandler = () => {
     const myForm = new FormData();
 
@@ -114,8 +134,7 @@ const ProductDetails = () => {
           <Metadata title={`${product.name} --Ecommerce`} />
           <div className="ProductDetails">
             <div>
-              <Carousel
-                fullHeightHover={false}
+              <Carousel className="productDetailsCarousel"
                 navButtonsProps={{
                   style: { backgroundColor: "transparent", borderRadius: 0 },
                 }}
@@ -139,20 +158,22 @@ const ProductDetails = () => {
             <div>
               <div className="detailsBlock-1">
                 <h2>{product.name}</h2>
-                <p> Product # {product._id}</p>
+                {/* <p> Product # {product._id}</p> */}
               </div>
 
-              <div className="detailsBlock-2"></div>
-
               <div className="detailsBlock-2">
-                <Rating {...options} />
+                <StyledRating
+                  {...options}
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                />
                 <span className="detailsBlock-2-span">
                   ({product.numOfReviews} Reviews){" "}
                 </span>
               </div>
 
               <div className="detailsBlock-3">
-                <h1> {product.price} </h1>
+                <h3>₹ {product.price} </h3>
                 <div className="detailsBlock-3-1">
                   <div className="detailsblock-3-1-1">
                     <button onClick={decreaseQty}>-</button>
