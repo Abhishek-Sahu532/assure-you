@@ -5,18 +5,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { addItemsToCart, removeItems } from "../../actions/cartAction";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { useNavigate } from "react-router-dom";
 // import Loader from "../Loader/Loader";
 
-
-const Cart = () => {
-
+const Cart =  () =>  {
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+  const {loading,  cartItems } =  useSelector((state) =>  state.cart);
 
-  console.log("cart", cartItems)
-  const navigate = useNavigate()
+  console.log("cart", cartItems);
+
   const increaseQuantity = (id, quantity, stock) => {
     const newQty = quantity + 1;
     if (stock <= quantity) {
@@ -38,20 +37,18 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
-    // navigate('/login?redirect=shipping')
-    navigate('shipping')
-  }
-
+    navigate("/login?redirect=shipping");
+    // navigate('shipping')
+  };
 
   return (
-
     <Fragment>
       {cartItems.length === 0 ? (
         <div className="emptyCart">
           <RemoveShoppingCartIcon />
 
           <Typography>No Product In Cart</Typography>
-          <Link to='/products'>View Products</Link>
+          <Link to="/products">View Products</Link>
         </div>
       ) : (
         <Fragment>
@@ -65,7 +62,10 @@ const Cart = () => {
             {cartItems &&
               cartItems.map((item) => (
                 <div className="cartContainer" key={item.product}>
-                  <CartItemsCard item={item} deleteCartItems={deleteCartItems} />
+                  <CartItemsCard
+                    item={item}
+                    deleteCartItems={deleteCartItems}
+                  />
                   <div className="cartInput">
                     <button
                       onClick={() => {
@@ -99,7 +99,8 @@ const Cart = () => {
               <div className="cartGrossProfitBox">
                 <p>Gross Total</p>
                 <p>{`₹ ${cartItems.reduce(
-                  (acc, item) => acc + item.quantity * item.price, 0
+                  (acc, item) => acc + item.quantity * item.price,
+                  0
                 )}   `}</p>
               </div>
               <div></div>
@@ -111,8 +112,6 @@ const Cart = () => {
         </Fragment>
       )}
     </Fragment>
-
-
   );
 };
 

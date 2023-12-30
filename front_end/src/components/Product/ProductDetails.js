@@ -147,7 +147,7 @@ const ProductDetails = () => {
                   product.images.map((item, i) => (
                     <img
                       className="CarouselImage"
-                      key={item.url}
+                      key={i}
                       src={item.url}
                       alt={`${i} Slide`}
                     />
@@ -239,7 +239,7 @@ const ProductDetails = () => {
           {product.reviews && product.reviews[0] ? (
             <div className="reviews">
               {product.reviews &&
-                product.reviews.map((review) => <ReviewCard review={review} />)}
+                product.reviews.map((review, i) => <ReviewCard     key={i} review={review} />)}
             </div>
           ) : (
             <p className="noReviews">No Reviews Yet</p>

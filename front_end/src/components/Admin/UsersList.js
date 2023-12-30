@@ -13,8 +13,6 @@ import Metadata from "../Metadata";
 import { useNavigate } from "react-router-dom";
 import { DELETE_USER_RESET } from "../../constaints/userConstants";
 
-
-
 const UsersList = ({ history }) => {
   const dispatch = useDispatch();
 
@@ -29,30 +27,9 @@ const UsersList = ({ history }) => {
     message,
   } = useSelector((state) => state.profile);
 
-  const deleteUserHandler = (id) => {
-    dispatch(deleteUser(id));
-  };
+ 
 
-  useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-
-    if (deleteError) {
-      alert.error(deleteError);
-      dispatch(clearErrors());
-    }
-
-    if (isDeleted) {
-      alert.success(message);
-      navigate("/admin/users");
-      dispatch({ type: DELETE_USER_RESET });
-    }
-
-    dispatch(getAllUsers());
-  }, [dispatch, alert, error, deleteError, navigate, isDeleted, message]);
-
+ 
   const columns = [
     { field: "id", headerName: "User ID", minWidth: 180, flex: 0.8 },
 
@@ -121,6 +98,31 @@ const UsersList = ({ history }) => {
       });
     });
 
+
+    const deleteUserHandler = (id) => {
+      dispatch(deleteUser(id));
+    };
+
+    useEffect(() => {
+      if (error) {
+        alert.error(error);
+        dispatch(clearErrors());
+      }
+  
+      if (deleteError) {
+        alert.error(deleteError);
+        dispatch(clearErrors());
+      }
+  
+      if (isDeleted) {
+        alert.success(message);
+        navigate("/admin/users");
+        dispatch({ type: DELETE_USER_RESET });
+      }
+  
+      dispatch(getAllUsers());
+    }, [dispatch, alert, error, deleteError, navigate, isDeleted, message]);
+  
   return (
     <Fragment>
       <Metadata title={`ALL USERS - Admin`} />
@@ -133,7 +135,7 @@ const UsersList = ({ history }) => {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={10}
+         
             disableSelectionOnClick
             className="productListTable"
             autoHeight

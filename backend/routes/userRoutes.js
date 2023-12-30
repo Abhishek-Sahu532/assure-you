@@ -12,8 +12,8 @@ router.route('/me').get(isAuthenticate, getUserDetails) //when user logged in th
 router.route('/password/update').put(isAuthenticate, updatePassword); // user will update own password after login
 router.route('/me/update').put(isAuthenticate, updateProfile); 
 
-router.route('/admin/users').get(isAuthenticate, authorizeRoles('admin'), getAllUser)
-router.route('/admin/user:id').get(isAuthenticate, authorizeRoles('admin'), getSingleUserDetail).put(isAuthenticate, authorizeRoles('admin'), updateUserRole).delete(isAuthenticate, authorizeRoles('admin'), deleteUser)
+router.route('/admin/users').get(isAuthenticate, authorizeRoles('admin'), getAllUser);
+router.route('/admin/user/:id').get(isAuthenticate, authorizeRoles('admin'), getSingleUserDetail).put(isAuthenticate, authorizeRoles('admin'), updateUserRole).delete(isAuthenticate, authorizeRoles('admin'), deleteUser)
 
 
 

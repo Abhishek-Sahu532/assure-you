@@ -96,6 +96,7 @@ const Products = () => {
             </ul>
 
             <fieldset>
+            <Typography>Ratings</Typography>
               <Typography>
                 <Slider
                   value={rating}

@@ -6,6 +6,8 @@ import { profileReducer, userReducer, forgetPasswordReducer, allUsersReducer, us
 import { cartReducer } from './reducers/cartReducer';
 import { myOrderReducer, newOrderReducer, orderDetailsReducer, allOrdersReducer, orderReducer } from './reducers/orderReducer';
 
+
+
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
@@ -27,15 +29,19 @@ const reducer = combineReducers({
   review: reviewReducer
 });
 
-// console.log('...........', reducer.orderDetails)
-const initialState = {
+
+const savedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+const savedShippingInfo = localStorage.getItem('shippingInfo') ? JSON.parse(localStorage.getItem('shippingInfo')) : {};
+
+
+ const  initialState = {
   cart: {
-    cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
-    shippingInfo: localStorage.getItem('shippingInfo') ? JSON.parse(localStorage.getItem('shippingInfo')) : {}
+    cartItems: savedCartItems,
+    shippingInfo:savedShippingInfo  
   }
 };
 
-// console.log('initialstate', initialState)
+console.log('initialstate', initialState)
 
 const middleware = [thunk];
 
