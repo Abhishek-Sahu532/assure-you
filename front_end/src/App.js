@@ -44,15 +44,22 @@ import Navbar from "./components/Navbar/Navbar.js";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
-  // console.log('>>>>>>>>', isAuthenticated)
-  const [stripeKey, setStripeKey] = useState(null);
 
+  const [stripeKey, setStripeKey] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false)
   useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
+
+    // CHECKING THE USER ROLES
+    if (user &&  user.role === 'admin') {
+      setIsAdmin(true)
+    }
+
+    // RECEIVING THE STRIPE KEYS 
     async function getStripeApiKey() {
       const { data } = await axios.get("/api/v1/stripeapikey");
       setStripeKey(data.stripeApiKey);
@@ -60,7 +67,7 @@ function App() {
     }
     getStripeApiKey();
     store.dispatch(loadUser()); //when user logged in, In the homepage the details of user will load
-  }, [stripeKey]);
+  }, [stripeKey, user]);
   return (
     <div className="App">
       {stripeKey && (
@@ -97,15 +104,36 @@ function App() {
           <Route path="/orders" element={<MyOrders />} />
           <Route path="/order/confirm" element={<ConfirmOrder />} />
           <Route path="/order/:id" element={<OrderDetails />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
+
         </Route>
 
-        <Route
+        {/* ADMIN ROUTES */}
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={isAdmin} />}>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/products" element={<ProductList />} />
+          <Route path="/admin/product" element={<NewProduct />} />
+          <Route path="/admin/product/:id" element={<UpdateProduct />} />
+          <Route path="/admin/orders" element={<OrderList />} />
+          <Route path="/admin/order/:id" element={<ProcessOrder />} />
+          <Route path="/admin/users" element={<UsersList />} />
+          <Route path="/admin/user/:id" element={<UpdateUser />} />
+          <Route path="/admin/reviews" element={<ProductReview />} />
+          {/* <Route path="/admin/order/:id" element={<ProcessOrder />} /> */}
+
+
+
+
+        </Route>
+
+        {/* <Route
           path="/account/"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={Profile}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           element={
             <ProtectedRoute
               exact
@@ -113,126 +141,124 @@ function App() {
               component={UpdateProfile}
             />
           }
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           exact
           path="/password/update"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={UpdatePassword}
-        />
+        /> */}
 
-        <Route exact path="/password/forget" Component={ForgetPassword} />
+        {/* <Route exact path="/cart" Component={Cart} /> */}
 
-        <Route exact path='/password/reset/"token' Component={ResetPassword} />
-        <Route exact path="/cart" Component={Cart} />
-
-        <Route
+        {/* <Route
           exact
           path="/cart/shipping"
           isAuthenticated={isAuthenticated}
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={Shipping}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           exact
           path="/success"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={Success}
-        />
-        <Route
+        /> */}
+        {/* <Route
           exact
           path="/orders"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={MyOrders}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           exact
           path="/order/confirm"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={ConfirmOrder}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/order/:id"
           element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
           Component={OrderDetails}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/admin/dashboard"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={Dashboard}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/admin/products"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={ProductList}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/admin/product"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={NewProduct}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/admin/product/:id"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={UpdateProduct}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/admin/orders"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={OrderList}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/admin/order/:id"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={ProcessOrder}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/admin/users"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={UsersList}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/admin/user/:id"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={UpdateUser}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/admin/reviews"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} isAdmin={true} />
           }
           Component={ProductReview}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           Component={
             window.location.pathname === "/process/payment" ? null : NotFound
           }
-        />
+        /> */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Footer />

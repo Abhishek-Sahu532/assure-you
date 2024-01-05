@@ -41,7 +41,7 @@ const savedShippingInfo = localStorage.getItem('shippingInfo') ? JSON.parse(loca
   }
 };
 
-console.log('initialstate', initialState)
+// console.log('initialstate', initialState)
 
 const middleware = [thunk];
 

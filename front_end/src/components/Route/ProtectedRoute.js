@@ -8,6 +8,9 @@ const ProtectedRoute = ({ isAdmin, isAuthenticated}) => {
     return <Navigate to={'/login'}/>
   }
 
+  if(!isAuthenticated && !isAdmin){
+    return <Navigate to={'/'}/>
+  }
 // if(isAuthenticated && isAdmin){
   return < Outlet />
 // }
