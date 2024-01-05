@@ -10,7 +10,6 @@ import Search from "./components/Product/Search.js";
 import LoginSingup from "./components/User/LoginSignup.js";
 import store from "./Store.js";
 import { loadUser } from "./actions/userAction.js";
-import UserOptions from "./components/Home/UserOptions.js";
 import { useSelector } from "react-redux";
 import Profile from "./components/User/Profile.js";
 import ProtectedRoute from "./components/Route/ProtectedRoute.js";
@@ -40,6 +39,8 @@ import ProductReview from "./components/Admin/ProductReview.js";
 import NotFound from "./components/NotFound/NotFound.js";
 import Navbar from "./components/Navbar/Navbar.js";
 
+
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -47,31 +48,21 @@ function App() {
   const [stripeKey, setStripeKey] = useState(null);
 
   useEffect(() => {
-    let isMounted = true;
-
-    const cleanUp = () => {
-      isMounted = false;
-    };
-    if (isMounted) {
-      WebFont.load({
-        google: {
-          families: ["Roboto", "Droid Sans", "Chilanka"],
-        },
-      });
-      async function getStripeApiKey() {
-        const { data } = await axios.get("/api/v1/stripeapikey");
-        setStripeKey(data.stripeApiKey);
-        // console.log("stripekey", stripeKey);
-      }
-      getStripeApiKey();
-      store.dispatch(loadUser()); //when user logged in, In the homepage the details of user will load
+    WebFont.load({
+      google: {
+        families: ["Roboto", "Droid Sans", "Chilanka"],
+      },
+    });
+    async function getStripeApiKey() {
+      const { data } = await axios.get("/api/v1/stripeapikey");
+      setStripeKey(data.stripeApiKey);
+      // console.log("stripekey", stripeKey);
     }
-
-    return cleanUp;
+    getStripeApiKey();
+    store.dispatch(loadUser()); //when user logged in, In the homepage the details of user will load
   }, [stripeKey]);
   return (
     <div className="App">
-      {isAuthenticated && <UserOptions user={user} />}
       {stripeKey && (
         <Elements stripe={loadStripe(stripeKey)}>
           <Routes>
@@ -85,7 +76,7 @@ function App() {
         </Elements>
       )}
 
-      <Navbar />
+      <Navbar user={user} />
       <Routes>
         <Route exact path="/" Component={Home} />
         <Route path="/product/:id" Component={ProductDetails} />
@@ -96,7 +87,7 @@ function App() {
         <Route path="/password/forget" Component={ForgetPassword} />
         <Route path="/password/reset/:token" Component={ResetPassword} />
 
-        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />} >
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/account" element={<Profile />} />
           <Route path="/me/update" element={<UpdateProfile />} />
           <Route path="/password/update" element={<UpdatePassword />} />

@@ -14,7 +14,7 @@ import banner4 from "../../assets/images/banner4.jpg";
 import banner5 from "../../assets/images/banner5.jpg";
 import banner6 from "../../assets/images/banner6.jpg";
 import banner7 from "../../assets/images/banner7.jpg";
-import { Container } from "@material-ui/core";
+
 
 const Home = () => {
   const alert = useAlert();
@@ -68,15 +68,13 @@ const Home = () => {
         <Fragment>
           <Metadata title="ECOMMERCE" />
           <div className="banner">
-            <Container>
-              <Carousel className="carousel" indicators={false}>
-                {images.map((image, i) => (
-                  <div key={i}>
-                    <img src={image.link} alt="" />
-                  </div>
-                ))}
-              </Carousel>
-            </Container>
+            <Carousel className="carousel" indicators={false}>
+              {images.map((image, i) => (
+                <div key={i}>
+                  <img src={image.link} alt="" />
+                </div>
+              ))}
+            </Carousel>
           </div>
 
           <div className="container" id="container">

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import "./UpdatePassword.css";
 import Loader from "../Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, updatePassword } from "../../actions/userAction";
+import { updatePassword } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_PASSWORD_RESET } from "../../constaints/userConstants";
@@ -32,27 +32,18 @@ const UpdatePassword = () => {
   };
 
   useEffect(() => {
-    let isMounted = true;
-
-    const cleanUp = () => {
-      isMounted = false;
-      dispatch(clearErrors());
-    };
-
-    if (isMounted) {
-      if (error) {
-        alert.error(error);
-        dispatch(clearErrors());
-      }
-      if (isUpdated) {
-        alert.success("Password Change Successfully");
-        navigate("/account");
-        dispatch({
-          type: UPDATE_PASSWORD_RESET,
-        });
-      }
+    if (error) {
+      alert.error(error);
+      // dispatch(clearErrors());
     }
-    return cleanUp;
+    if (isUpdated) {
+      alert.success("Password Change Successfully");
+      navigate("/account");
+      dispatch({
+        type: UPDATE_PASSWORD_RESET,
+      });
+    }
+
   }, [dispatch, error, alert, navigate, isUpdated]);
 
   return (

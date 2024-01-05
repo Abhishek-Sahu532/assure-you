@@ -2,6 +2,8 @@ import React from "react";
 import appStore from "../../assets/images/Appstore.png";
 import playstore from "../../assets/images/playstore.png";
 import "./Footer.css";
+import logo from '../../assets/images/logo.png'
+
 
 const Footer = () => {
   return (
@@ -12,8 +14,8 @@ const Footer = () => {
         <img src={appStore} alt="appStore" />
       </div>
       <div className="midFooter">
-        <h1>Ecommerce</h1>
-        <p>High Quality is our first priority</p>
+    <img src={logo} alt='logo' className="logo" />
+        <p>Shop Secure, Shop Assure You</p>
         <p>Copyright@2023 &copy; Abhishek </p>
       </div>
       <div className="rightFooter">

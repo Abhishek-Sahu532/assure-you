@@ -10,9 +10,10 @@ import {positions, transitions, Provider as AlertProvider} from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
 const options ={
-  timeout: 5000,
-  positions: positions.BOTTOM_CENTER,
-  transitions: transitions.SCALE
+  timeout: 1000,
+  positions: positions.TOP_LEFT,
+  transitions: transitions.FADE,
+  offset: '14px'
 }
 
 ReactDOM.render(

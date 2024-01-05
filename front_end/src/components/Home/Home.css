@@ -1,22 +1,24 @@
 .banner {
   /* height: 100vmin; */
   margin-top: 5vmax;
-  z-index: -1;
+  width: 100vw;
+  height: auto;
+  /* z-index: -1; */
 }
 .carousel {
   display: block;
   width: 100vw;
-  height: 30%;
+  height: auto;
   position: relative;
   margin: 0 auto;
   padding: 0;
-  margin-left: -5.5vmax;
+  /* margin-left: -5.5vmax; */
   z-index: -6;
 }
 
 .carousel img {
   width: 100vw;
-  height: 600px;
+  height: auto;
   vertical-align: top;
 }
 
@@ -119,9 +121,11 @@
 /* USER OPTIONS */
 
 .speedDial {
+
   position: fixed;
-  right: 1vmax;
+  right: 2vmax;
   top: 0.7vmax;
+
 }
 
 .speedDialIcon {

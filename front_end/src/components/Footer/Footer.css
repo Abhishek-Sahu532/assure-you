@@ -1,10 +1,15 @@
 footer {
   margin-top: 16vmax;
-  padding: 2vmax;
-  background-color: #000;
+  /* padding: 2vmax; */
+  background-color: rgb(84, 143, 143);
   color: white;
   display: flex;
   align-items: center;
+}
+
+.midFooter img {
+  width: 14vmax;
+  height: auto;
 }
 
 .leftFooter {
@@ -39,7 +44,7 @@ footer {
 .midFooter > h1 {
   font-size: 4vmax;
   font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
-  color:#7286d3
+  color: #7286d3;
 }
 
 .midFooter > p {

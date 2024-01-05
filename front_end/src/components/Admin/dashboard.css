@@ -4,12 +4,14 @@
     display: grid;
     grid-template-columns: 1fr 5fr;
     position: absolute;
+    height: 100vh;
   }
   
   .dashboardContainer {
     border-left: 1px solid rgba(0, 0, 0, 0.13);
     background-color: rgb(255, 255, 255);
-    padding: 3rem 0;
+    padding: 2rem 0;
+   
   }
   
   .dashboardContainer > h1 {
@@ -17,7 +19,7 @@
     font: 300 2rem "Roboto";
     text-align: center;
     width: 50%;
-    padding: 1.5rem;
+    padding: 4rem;
     margin: auto;
   }
   

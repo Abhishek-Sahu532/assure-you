@@ -7,12 +7,12 @@ import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { useNavigate } from "react-router-dom";
-// import Loader from "../Loader/Loader";
+
 
 const Cart =  () =>  {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {loading,  cartItems } =  useSelector((state) =>  state.cart);
+  const { cartItems } =  useSelector((state) =>  state.cart);
 
   console.log("cart", cartItems);
 
