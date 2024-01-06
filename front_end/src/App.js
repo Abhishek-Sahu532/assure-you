@@ -94,6 +94,7 @@ function App() {
         <Route path="/password/forget" Component={ForgetPassword} />
         <Route path="/password/reset/:token" Component={ResetPassword} />
 
+        
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/account" element={<Profile />} />
           <Route path="/me/update" element={<UpdateProfile />} />

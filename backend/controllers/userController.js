@@ -117,14 +117,15 @@ exports.forgetPassword = async (req, res, next) => {
     //   "host"
     // )}/api/v1/password/reset/${resetToken}`;
 
-    const resetPasswordLink = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`; //TEMP
+    // const resetPasswordLink = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`; //TEMP
+    const resetPasswordLink = `${req.protocol}://${req.get("host")}/password/reset/${resetToken}`;
 
     const message = `Your password reset token is TEMP :- \n ${resetPasswordLink} \nIf you have not requested this email then please ignore it  `;
 
     try {
       await sendEmail({
         email: user.email,
-        subject: `Ecommerce Password Recovery`,
+        subject: `Assure You Password Recovery`,
         message,
       });
 

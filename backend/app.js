@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 // const fileUpload = require('express-fileupload')
 const dotenv = require('dotenv')
 const multer = require('multer');
-
+const path = require('path')
 
 //config
 dotenv.config({path: 'backend/config/.env'})
@@ -38,6 +38,11 @@ app.use('/api/v1' , order);
 app.use('/api/v1' , payment);
 
 
+app.use(express.static(path.join(__dirname, "../front_end/build")))
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.resolve(__dirname, "../front_end/build" ))
+})
 
 //middleware for error
 

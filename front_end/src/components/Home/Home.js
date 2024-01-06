@@ -66,7 +66,7 @@ const Home = () => {
         <Loader />
       ) : (
         <Fragment>
-          <Metadata title="ECOMMERCE" />
+          <Metadata title="Assure You" />
           <div className="banner">
             <Carousel className="carousel" indicators={false}>
               {images.map((image, i) => (
