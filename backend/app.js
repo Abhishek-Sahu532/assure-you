@@ -41,7 +41,7 @@ app.use('/api/v1' , payment);
 app.use(express.static(path.join(__dirname, "../front_end/build")))
 
 app.get('*', (req, res)=>{
-    res.sendFile(path.resolve(__dirname, "../front_end/build" ))
+    res.sendFile(path.resolve(__dirname, "../front_end/build/index/html" ))
 })
 
 //middleware for error
