@@ -21,6 +21,7 @@
     "axios": "^1.5.1",
     "country-state-city": "^3.2.1",
     "framer-motion": "^6.5.1",
+    "gh-pages": "^6.1.1",
     "overlay-navbar": "^1.2.3",
     "react": "^17.0.2",
     "react-alert": "^7.0.3",
@@ -41,11 +42,15 @@
     "webfontloader": "^1.6.28"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b master -d build",
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+ 
   },
+  "homepage": "https://Abhishek-Sahu532.github.io/e-commerce-app",
   "eslintConfig": {
     "extends": [
       "react-app",
