@@ -4,7 +4,6 @@ const errorMiddleware = require('./middlewares/eroor');
 app.use(express.json());
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-// const fileUpload = require('express-fileupload')
 const dotenv = require('dotenv')
 const multer = require('multer');
 const path = require('path')
@@ -41,7 +40,7 @@ app.use('/api/v1' , payment);
 app.use(express.static(path.join(__dirname, "../front_end/build")))
 
 app.get('*', (req, res)=>{
-    res.sendFile(path.resolve(__dirname, "../front_end/build" ))
+    res.sendFile(path.resolve(__dirname, "../front_end/build/index.html" ))
 })
 
 //middleware for error
