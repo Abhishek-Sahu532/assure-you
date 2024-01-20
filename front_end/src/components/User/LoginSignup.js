@@ -9,13 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
-import { useSearchParams } from 'react-router-dom';
-
-
-
+import { useSearchParams, useLocation } from "react-router-dom";
 
 const LoginSingup = () => {
-  // const location = useLocation();
+  const location = useLocation();
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
@@ -24,7 +21,6 @@ const LoginSingup = () => {
     (state) => state.user
   );
   const [searchParams] = useSearchParams();
-
 
   const loginTab = useRef(null);
   const registerTab = useRef(null);
@@ -44,28 +40,38 @@ const LoginSingup = () => {
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState("./Profile.png");
 
+
+  const redirect = location.state?.from?.pathname || "/account";
   const loginSubmit = (e) => {
     e.preventDefault();
     // console.log('Form Submit');
     dispatch(login(loginEmail, loginPassword));
+    navigate(redirect, { replace: true });
   };
 
-  // const redirect = location.search ? location.search.split("=")[1] : "/account";
-
+ 
   useEffect(() => {
-    const redirect = searchParams.get('redirect') || "/account";
+    
     if (error) {
       alert.error(error);
       // dispatch(clearErrors())
     }
     if (isAuthenticated) {
       //IF THE USER IS ALREADY LOGGED IN, IT WILL PUSHED-REDIRECTED TO THE ACCOUNT PAGE
-      navigate(redirect);
-    } 
+      navigate(redirect, { replace: true });
+    }
     // else {
     //   navigate("/login");
     // }
-  }, [dispatch, error, alert, navigate, isAuthenticated, searchParams]);
+  }, [
+    dispatch,
+    error,
+    alert,
+    navigate,
+    isAuthenticated,
+    searchParams,
+    redirect,
+  ]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {
@@ -93,6 +99,7 @@ const LoginSingup = () => {
           const avatarDataUrl = reader.result;
           setAvatarPreview(avatarDataUrl);
           setAvatar(avatarDataUrl);
+
           // console.log(avatarDataUrl)
         }
       };
@@ -104,6 +111,7 @@ const LoginSingup = () => {
         [e.target.name]: e.target.value,
       }));
     }
+    navigate(redirect, { replace: true });
   };
 
   const registerSubmit = (e) => {

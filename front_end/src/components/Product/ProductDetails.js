@@ -184,7 +184,7 @@ const ProductDetails = () => {
                 </div>
                 <p>
                   Status :
-                  <b className={product.stock < 1 ? "redColor" : "greenColor"}>
+                  <b className={product.stock < 1 ? "redColor" : "greencolor"}>
                     {product.stock < 1 ? "OutOfStock" : "InStock"}
                   </b>
                 </p>

@@ -1,78 +1,83 @@
 footer {
-  margin-top: 16vmax;
+  margin-top: 10vmax; 
   /* padding: 2vmax; */
   background-color: rgb(84, 143, 143);
   color: white;
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  justify-content:space-around;
+  height: auto;
+  padding: 20px;
+  padding: 3rem;
+  flex-wrap: wrap;
 }
 
-.midFooter img {
-  width: 14vmax;
+.footerCompanySection {
+  display: flex;
+  flex-direction: column;
+  /* padding: 5px; */
+  margin-top: -3vmax;
+}
+
+.footerCompanySection .logo {
+  width: 12vmax;
   height: auto;
 }
+.footerCompanySection img {
+  width: 8rem;
+  height: 3rem;
+  padding-top: 10px;
+}
 
-.leftFooter {
-  width: 20%;
+.footerCompanySection p {
+  padding: 5px 0;
+}
+
+.footerCompanySection h4 {
+  font-weight: 700;
+  padding: 5px 0;
+}
+
+
+.footerCategoriesSection,  .footerHelpSection, .footerGetInTouchSection {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: baseline;
+  column-gap: 5;
 }
 
-.leftFooter > h4 {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
-  font-size: 1vmax;
+.footerCategoriesSection h4, .footerHelpSection h4, .footerGetInTouchSection h4 {
+  font-weight: 700;
+color: black;
+font-size: 1.5vmax;
+
 }
 
-.leftFooter > p {
-  text-align: center;
-  font-family: "Lucida Sans", "sans-serif";
-}
 
-.leftFooter > img {
-  width: 10vmax;
-  height: 3vmax;
-  margin: 1vmax;
-  cursor: pointer;
-}
-
-.midFooter {
-  width: 60%;
-  text-align: center;
-}
-
-.midFooter > h1 {
-  font-size: 4vmax;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
-  color: #7286d3;
-}
-
-.midFooter > p {
-  max-width: 60%;
-  margin: 1vmax auto;
-}
-
-.rightFooter {
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.rightFooter > h4 {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
-  font-size: 1.4vmax;
-  text-decoration: underline;
-}
-
-.rightFooter > a {
-  text-decoration: none;
-  font-size: 1.3vmax;
-  font-family: "Gill Sans", "Gill Sans MT", "sans serif";
+.footerCategoriesSection a,  .footerHelpSection a, .footerGetInTouchSection a, .footerGetInTouchSection p{
   color: white;
-  transition: all 0.5;
+  padding-top: 1.5vmax;
+  /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+  font-family: montserrat ;
 }
 
-.rightFooter > a:hover {
-  color: #eb4034;
+.socialIconSections{
+  margin-top: 10px;
+
 }
+
+.socialIconSections a{
+  padding-left: 10px;
+  padding-top: 2vmax;
+}
+
+
+
+@media screen and (max-width : 480px) {
+.footerHelpSection{
+  padding-top: 2vmax;
+}
+.footerGetInTouchSection{
+  padding-top: 2vmax;
+}
+} 
