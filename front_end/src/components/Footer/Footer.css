@@ -24,8 +24,8 @@ footer {
   height: auto;
 }
 .footerCompanySection img {
-  width: 8rem;
-  height: 3rem;
+  width: 8vmax;
+  height: 3vmax;
   padding-top: 10px;
 }
 
@@ -47,10 +47,9 @@ footer {
 }
 
 .footerCategoriesSection h4, .footerHelpSection h4, .footerGetInTouchSection h4 {
-  font-weight: 700;
-color: black;
-font-size: 1.5vmax;
-
+  font-weight: 900;
+color: white;
+font-size: 2vmax;
 }
 
 
@@ -79,5 +78,25 @@ font-size: 1.5vmax;
 }
 .footerGetInTouchSection{
   padding-top: 2vmax;
+}
+
+.footerCategoriesSection h4, .footerHelpSection h4, .footerGetInTouchSection h4 {
+  font-weight: 900;
+  margin-top: 2vmax;
+color: white;
+font-size: 3vmax;
+}
+.footerCompanySection .logo {
+  width: 25vmax;
+  height: auto;
+}
+
+.footerCompanySection img {
+  width: 22vmax;
+  /* height: 8vmax; */
+height: auto;
+}
+.footerGetInTouchSection{
+  padding-left: 3vmax;
 }
 } 
