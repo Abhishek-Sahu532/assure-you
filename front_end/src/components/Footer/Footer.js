@@ -48,13 +48,13 @@ const Footer = () => {
 
         <div className="socialIconSections">
           <a href="1#">
-            <img src={facebook} alt="" srcset="" />{" "}
+            <img src={facebook} alt="" />{" "}
           </a>
           <a href="1#">
-            <img src={instagram} alt="" srcset="" />{" "}
+            <img src={instagram} alt="" />{" "}
           </a>
           <a href="1#">
-            <img src={twitter} alt="" srcset="" />{" "}
+            <img src={twitter} alt=""  />{" "}
           </a>
         </div>
       </div>

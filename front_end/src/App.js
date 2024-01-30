@@ -67,7 +67,7 @@ function App() {
     }
     getStripeApiKey();
     store.dispatch(loadUser()); //when user logged in, In the homepage the details of user will load
-  }, []);
+  },[]);
   return (
     <div className="App">
       {stripeKey && (
